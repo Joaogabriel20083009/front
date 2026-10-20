@@ -6,13 +6,11 @@ import {
   Typography,
   Button,
   Tag,
-  Badge,
   Modal,
   Checkbox,
   List,
   Avatar,
   message,
-  Space,
 } from 'antd';
 import {
   UsergroupAddOutlined,
@@ -33,11 +31,11 @@ interface TeamMember {
 }
 
 const mockTeamMembers: TeamMember[] = [
-  { id: 'emp-1', name: 'José Aparecido da Silva', role: 'Operador de Colhedora de Cana II', department: 'Colheita Mecanizada' },
-  { id: 'emp-2', name: 'Anderson Rodrigo Lima', role: 'Mecânico de Tratores e Implementos', department: 'Oficina Central Agrícola' },
-  { id: 'emp-3', name: 'Marcos Vinicius Santos', role: 'Líder de Turma de Plantio', department: 'Tratos Culturais' },
-  { id: 'emp-4', name: 'Valdir Ferreira', role: 'Motorista Canavieiro Rodoviário', department: 'Logística Canavieira' },
-  { id: 'emp-5', name: 'Claudio Roberto Souza', role: 'Operador de Caldeira e Destilaria', department: 'Indústria / Bioeletricidade' },
+  { id: 'emp-1', name: 'José Aparecido da Silva', role: 'Operador de Colhedora II', department: 'Colheita Mecanizada' },
+  { id: 'emp-2', name: 'Anderson Rodrigo Lima', role: 'Mecânico de Tratores', department: 'Oficina Central' },
+  { id: 'emp-3', name: 'Marcos Vinicius Santos', role: 'Líder de Turma', department: 'Tratos Culturais' },
+  { id: 'emp-4', name: 'Valdir Ferreira', role: 'Motorista Canavieiro', department: 'Logística Canavieira' },
+  { id: 'emp-5', name: 'Claudio Roberto Souza', role: 'Operador de Caldeira', department: 'Indústria / Bioeletricidade' },
 ];
 
 export const PortalLider: React.FC = () => {
@@ -53,12 +51,10 @@ export const PortalLider: React.FC = () => {
 
   const handleConfirmReservation = () => {
     if (selectedMemberIds.length === 0) {
-      message.warning('Selecione ao menos um colaborador da equipe.');
+      message.warning('Selecione ao menos um colaborador.');
       return;
     }
-    message.success(
-      `${selectedMemberIds.length} vaga(s) reservada(s) com sucesso para "${selectedTraining?.title}"!`
-    );
+    message.success(`${selectedMemberIds.length} vaga(s) reservada(s) para "${selectedTraining?.title}"!`);
     setIsModalOpen(false);
   };
 
@@ -69,149 +65,120 @@ export const PortalLider: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-      <div className="lins-page-header" style={{ marginBottom: 28 }}>
-        <Title level={2} className="lins-page-title" style={{ margin: 0, fontSize: 24 }}>
-          Portal do Líder & Gestão de Equipes
+    <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <div className="lins-page-header" style={{ marginBottom: 16 }}>
+        <Title level={4} style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>
+          Portal do Líder
         </Title>
-        <Paragraph type="secondary" style={{ margin: '4px 0 0', color: '#54595F', fontSize: 14 }}>
-          Indique os operadores e colaboradores da sua frente operacional para os treinamentos técnicos e NRs da safra.
-        </Paragraph>
+        <Text type="secondary" style={{ fontSize: 12.5 }}>
+          Selecione capacitações para indicar e inscrever operadores da sua frente
+        </Text>
       </div>
 
-      <Row gutter={[20, 20]}>
+      {/* Grid Compacto com 3 colunas */}
+      <Row gutter={[12, 12]}>
         {mockTrainings.map((training) => {
           const availableSlots = training.capacity - training.enrolledCount;
           return (
-            <Col xs={24} md={12} key={training.id}>
+            <Col xs={24} sm={12} lg={8} key={training.id}>
               <Card
                 className="lins-card"
-                bordered={false}
+                styles={{
+                  header: { minHeight: 38, padding: '0 12px', borderBottom: '1px solid #f1f5f9' },
+                  body: { padding: '12px' },
+                }}
                 title={
-                  <Space direction="vertical" size={2} style={{ width: '100%' }}>
-                    <Tag
-                      style={{
-                        borderRadius: 4,
-                        border: '1px solid #d0e1fd',
-                        background: '#ebf2ff',
-                        color: '#0032a0',
-                        fontWeight: 600,
-                        fontSize: 11,
-                      }}
-                    >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Tag style={{ borderRadius: 3, border: 'none', background: '#ebf2ff', color: '#0032a0', fontSize: 11, margin: 0 }}>
                       {training.category}
                     </Tag>
-                    <Text strong style={{ fontSize: 15, color: '#184080' }}>
-                      {training.title}
-                    </Text>
-                  </Space>
+                    <span style={{ fontSize: 11, color: availableSlots > 5 ? '#0D9690' : '#d97706', fontWeight: 600 }}>
+                      {availableSlots} vagas
+                    </span>
+                  </div>
                 }
-                extra={
-                  <Badge
-                    count={`${availableSlots} vagas abertas`}
-                    style={{
-                      backgroundColor: availableSlots > 5 ? '#00B5AD' : '#f59e0b',
-                      borderRadius: 4,
-                      fontWeight: 600,
-                      boxShadow: 'none',
-                    }}
-                  />
-                }
-                actions={[
-                  <Button
-                    key="enroll"
-                    type="primary"
-                    icon={<UsergroupAddOutlined />}
-                    onClick={() => handleOpenEnrollment(training)}
-                    disabled={availableSlots <= 0 || training.status === 'concluido'}
-                    style={{
-                      backgroundColor: '#0032A0',
-                      borderColor: '#0032A0',
-                      borderRadius: 6,
-                    }}
-                  >
-                    Indicar Operadores da Equipe
-                  </Button>,
-                ]}
               >
-                <Paragraph ellipsis={{ rows: 2 }} type="secondary" style={{ minHeight: 40, color: '#54595F', fontSize: 13.5 }}>
+                <Text strong style={{ fontSize: 13, color: '#0f172a', display: 'block', minHeight: 36, lineHeight: 1.3 }}>
+                  {training.title}
+                </Text>
+
+                <Paragraph ellipsis={{ rows: 2 }} type="secondary" style={{ fontSize: 11.5, minHeight: 32, margin: '6px 0 10px', color: '#64748b' }}>
                   {training.description}
                 </Paragraph>
 
-                <div style={{ background: '#f8fbfd', padding: '12px 16px', borderRadius: 6, border: '1px solid #f2f5f7' }}>
-                  <Space direction="vertical" size={6} style={{ width: '100%', fontSize: 13 }}>
-                    <div>
-                      <UserOutlined style={{ marginRight: 8, color: '#0032A0' }} />
-                      <Text type="secondary">Instrutor: </Text>
-                      <Text strong style={{ color: '#184080' }}>{training.instructor}</Text>
-                    </div>
-                    <div>
-                      <CalendarOutlined style={{ marginRight: 8, color: '#00B5AD' }} />
-                      <Text type="secondary">Período: </Text>
-                      <Text style={{ color: '#3d3d3d' }}>{training.startDate} até {training.endDate} ({training.workloadHours}h)</Text>
-                    </div>
-                    <div>
-                      <EnvironmentOutlined style={{ marginRight: 8, color: '#54595F' }} />
-                      <Text type="secondary">Local: </Text>
-                      <Text style={{ color: '#3d3d3d' }}>{training.location}</Text>
-                    </div>
-                  </Space>
+                <div style={{ background: '#f8fafc', padding: '8px 10px', borderRadius: 4, border: '1px solid #f1f5f9', fontSize: 11.5, marginBottom: 10 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
+                    <span style={{ color: '#64748b' }}><UserOutlined style={{ marginRight: 4 }} />{training.instructor}</span>
+                    <strong style={{ color: '#334155' }}>{training.workloadHours}h</strong>
+                  </div>
+                  <div style={{ color: '#64748b' }}>
+                    <CalendarOutlined style={{ marginRight: 4 }} />{training.startDate}
+                    <span style={{ margin: '0 4px' }}>•</span>
+                    <EnvironmentOutlined style={{ marginRight: 4 }} />{training.location.split('-')[0]}
+                  </div>
                 </div>
+
+                <Button
+                  type="primary"
+                  icon={<UsergroupAddOutlined />}
+                  block
+                  size="small"
+                  onClick={() => handleOpenEnrollment(training)}
+                  disabled={availableSlots <= 0 || training.status === 'concluido'}
+                  style={{
+                    backgroundColor: '#0032A0',
+                    borderColor: '#0032A0',
+                    borderRadius: 4,
+                    height: 30,
+                    fontSize: 12,
+                  }}
+                >
+                  Indicar Equipe
+                </Button>
               </Card>
             </Col>
           );
         })}
       </Row>
 
+      {/* Modal de Reserva Compacto */}
       <Modal
-        title={
-          <div>
-            <div style={{ fontSize: 13, color: '#00B5AD', fontWeight: 600, textTransform: 'uppercase' }}>
-              Reserva de Vagas de Capacitação
-            </div>
-            <div style={{ fontSize: 16, color: '#0032A0', fontWeight: 700 }}>
-              {selectedTraining?.title}
-            </div>
-          </div>
-        }
+        title={<span style={{ color: '#0032A0', fontSize: 14, fontWeight: 600 }}>Indicar Colaboradores • {selectedTraining?.title}</span>}
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         onOk={handleConfirmReservation}
-        okText={`Confirmar Indicação (${selectedMemberIds.length} selecionados)`}
+        okText={`Confirmar (${selectedMemberIds.length})`}
         cancelText="Voltar"
+        width={440}
         okButtonProps={{
-          style: { backgroundColor: '#0032A0', borderColor: '#0032A0', borderRadius: 6 },
+          style: { backgroundColor: '#0032A0', borderColor: '#0032A0', borderRadius: 4 },
         }}
       >
-        <Paragraph type="secondary" style={{ marginTop: 12, fontSize: 13.5 }}>
-          Selecione os operadores ou mecânicos do seu turno para participação no treinamento:
-        </Paragraph>
+        <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 10 }}>
+          Selecione os operadores da equipe para o treinamento:
+        </Text>
 
         <List
+          size="small"
           dataSource={mockTeamMembers}
           renderItem={(member) => (
             <List.Item
               style={{
                 cursor: 'pointer',
-                borderRadius: 6,
-                padding: '10px 12px',
-                marginBottom: 4,
-                transition: 'background 0.2s',
+                borderRadius: 4,
+                padding: '6px 8px',
+                marginBottom: 2,
               }}
               onClick={() => toggleMemberSelection(member.id)}
             >
               <List.Item.Meta
-                avatar={<Avatar style={{ backgroundColor: '#eef2ff', color: '#0032A0' }} icon={<UserOutlined />} />}
+                avatar={<Avatar size="small" style={{ backgroundColor: '#ebf2ff', color: '#0032a0', fontSize: 11 }}>{member.name.charAt(0)}</Avatar>}
                 title={
-                  <Checkbox checked={selectedMemberIds.includes(member.id)}>
-                    <span style={{ fontWeight: 600, color: '#184080' }}>{member.name}</span>
+                  <Checkbox checked={selectedMemberIds.includes(member.id)} style={{ fontSize: 12.5 }}>
+                    <span style={{ fontWeight: 500, color: '#1e293b' }}>{member.name}</span>
                   </Checkbox>
                 }
-                description={
-                  <span style={{ fontSize: 12, color: '#54595F' }}>
-                    {member.role} • <strong>{member.department}</strong>
-                  </span>
-                }
+                description={<span style={{ fontSize: 11, color: '#64748b' }}>{member.role} • {member.department}</span>}
               />
             </List.Item>
           )}

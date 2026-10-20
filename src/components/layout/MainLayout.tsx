@@ -21,39 +21,38 @@ export const MainLayout: React.FC = () => {
   const menuItems = [
     {
       key: '/rh',
-      icon: <DashboardOutlined style={{ fontSize: 16 }} />,
+      icon: <DashboardOutlined style={{ fontSize: 14 }} />,
       label: 'Dashboard do RH',
     },
     {
       key: '/lider',
-      icon: <TeamOutlined style={{ fontSize: 16 }} />,
+      icon: <TeamOutlined style={{ fontSize: 14 }} />,
       label: 'Portal do Líder',
     },
     {
       key: '/instrutor',
-      icon: <VideoCameraOutlined style={{ fontSize: 16 }} />,
+      icon: <VideoCameraOutlined style={{ fontSize: 14 }} />,
       label: 'Painel do Instrutor',
     },
     {
       key: '/certificados',
-      icon: <SafetyCertificateOutlined style={{ fontSize: 16 }} />,
-      label: 'Certificados Digitais',
+      icon: <SafetyCertificateOutlined style={{ fontSize: 14 }} />,
+      label: 'Certificados',
     },
     {
       key: '/validar',
-      icon: <QrcodeOutlined style={{ fontSize: 16 }} />,
+      icon: <QrcodeOutlined style={{ fontSize: 14 }} />,
       label: 'Validação Pública',
     },
   ];
 
-  // Identifica a chave selecionada no menu
   const selectedKey = menuItems.find((item) =>
     location.pathname.startsWith(item.key)
   )?.key || '/rh';
 
   return (
     <Layout className="app-layout">
-      {/* Header Corporativo Lins Agroindustrial */}
+      {/* Header Minimalista */}
       <Header className="app-header">
         <div className="app-brand" style={{ cursor: 'pointer' }} onClick={() => navigate('/rh')}>
           <img
@@ -61,73 +60,67 @@ export const MainLayout: React.FC = () => {
             alt="Lins Agroindustrial"
             className="app-brand-logo"
             onError={(e) => {
-              // Fallback se a imagem externa não carregar
               (e.currentTarget as HTMLElement).style.display = 'none';
             }}
           />
           <div className="app-brand-divider" />
           <div className="app-brand-text">
-            <span className="app-brand-title">Gestão de Treinamentos</span>
-            <span className="app-brand-subtitle">Universidade Corporativa RH</span>
+            <span className="app-brand-title">Treinamentos RH</span>
+            <span className="app-brand-subtitle">Universidade Corporativa</span>
           </div>
         </div>
 
-        <Space size="large">
+        <Space size="middle">
           <Badge status="processing" color="#00B5AD" text={
-            <span style={{ fontSize: 13, color: '#54595F' }}>
+            <span style={{ fontSize: 12, color: '#64748b' }}>
               Safra 2026/27
             </span>
           } />
 
           <Tag
             color="default"
-            icon={<EnvironmentOutlined style={{ color: '#0032A0' }} />}
+            icon={<EnvironmentOutlined style={{ color: '#0032A0', fontSize: 11 }} />}
             style={{
-              padding: '4px 10px',
+              padding: '2px 8px',
               borderRadius: 4,
-              borderColor: '#e7e7e7',
-              backgroundColor: '#f8fbfd',
-              color: '#184080',
-              fontWeight: 500,
+              fontSize: 11.5,
+              borderColor: '#e2e8f0',
+              backgroundColor: '#f8fafc',
+              color: '#475569',
             }}
           >
-            Unidade Agroindustrial Lins/SP
+            Lins/SP
           </Tag>
         </Space>
       </Header>
 
       <Layout>
-        {/* Menu Lateral Clean */}
+        {/* Menu Lateral Compacto */}
         <Sider
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
-          width={250}
+          width={210}
           className="app-sider"
           theme="light"
         >
-          <div style={{ padding: '16px 20px', borderBottom: '1px solid #f2f5f7' }}>
-            <Text type="secondary" style={{ fontSize: 11, fontWeight: 700, letterSpacing: 0.8, color: '#8c9ba5' }}>
-              {collapsed ? 'MENU' : 'MÓDULOS DE CAPACITAÇÃO'}
-            </Text>
-          </div>
           <Menu
             mode="inline"
             selectedKeys={[selectedKey]}
             items={menuItems}
             onClick={({ key }) => navigate(key)}
-            style={{ borderRight: 0, marginTop: 8 }}
+            style={{ borderRight: 0, marginTop: 10 }}
           />
         </Sider>
 
-        <Layout style={{ background: '#f8fbfd' }}>
+        <Layout style={{ background: '#f8fafc' }}>
           <Content className="app-content">
             <Outlet />
           </Content>
 
           <Footer className="app-footer">
-            <Text type="secondary" style={{ fontSize: 12.5 }}>
-              <strong>Lins Agroindustrial S/A</strong> • Diretoria de Recursos Humanos e Relações Trabalhistas © 2026
+            <Text type="secondary" style={{ fontSize: 11.5 }}>
+              Lins Agroindustrial S/A • Recursos Humanos © 2026
             </Text>
           </Footer>
         </Layout>

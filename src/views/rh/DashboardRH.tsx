@@ -30,7 +30,7 @@ import type { Training, TrainingStatus } from '../../lib/types/training';
 import { trainingService } from '../../lib/trainingService';
 import type { RHIndicators } from '../../lib/mocks/trainingMock';
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Text } = Typography;
 const { Option } = Select;
 
 export const DashboardRH: React.FC = () => {
@@ -112,53 +112,56 @@ export const DashboardRH: React.FC = () => {
   const getStatusTag = (status: TrainingStatus) => {
     switch (status) {
       case 'planejado':
-        return <Tag color="blue" style={{ borderRadius: 4 }}>Planejado</Tag>;
+        return <Tag color="blue" style={{ borderRadius: 3, fontSize: 11, margin: 0 }}>Planejado</Tag>;
       case 'em_andamento':
-        return <Tag color="cyan" style={{ borderRadius: 4, color: '#0d9690', borderColor: '#b3e7e4', background: '#e6f7f6' }}>Em Andamento</Tag>;
+        return <Tag color="cyan" style={{ borderRadius: 3, fontSize: 11, margin: 0 }}>Em Andamento</Tag>;
       case 'concluido':
-        return <Tag color="green" style={{ borderRadius: 4 }}>Concluído</Tag>;
+        return <Tag color="green" style={{ borderRadius: 3, fontSize: 11, margin: 0 }}>Concluído</Tag>;
       case 'cancelado':
-        return <Tag color="error" style={{ borderRadius: 4 }}>Cancelado</Tag>;
+        return <Tag color="error" style={{ borderRadius: 3, fontSize: 11, margin: 0 }}>Cancelado</Tag>;
       default:
-        return <Tag style={{ borderRadius: 4 }}>{status}</Tag>;
+        return <Tag style={{ borderRadius: 3, fontSize: 11, margin: 0 }}>{status}</Tag>;
     }
   };
 
   const columns: ColumnsType<Training> = [
     {
-      title: 'Programa de Treinamento',
+      title: 'Treinamento',
       dataIndex: 'title',
       key: 'title',
       render: (text, record) => (
         <div>
-          <Text strong style={{ color: '#184080', fontSize: 14 }}>{text}</Text>
-          <div style={{ fontSize: 12, color: '#54595F', marginTop: 2 }}>{record.category}</div>
+          <Text strong style={{ color: '#0f172a', fontSize: 13 }}>{text}</Text>
+          <div style={{ fontSize: 11, color: '#64748b' }}>{record.category}</div>
         </div>
       ),
     },
     {
-      title: 'Instrutor / Facilitador',
+      title: 'Instrutor',
       dataIndex: 'instructor',
       key: 'instructor',
-      render: (val) => <span style={{ color: '#3d3d3d' }}>{val}</span>,
+      render: (val) => <span style={{ color: '#475569', fontSize: 12.5 }}>{val}</span>,
     },
     {
-      title: 'Carga Horária',
+      title: 'Carga',
       dataIndex: 'workloadHours',
       key: 'workloadHours',
-      render: (hours) => <Tag style={{ borderRadius: 4, background: '#f2f5f7', border: '1px solid #e7e7e7', color: '#184080', fontWeight: 600 }}>{hours} horas</Tag>,
+      width: 90,
+      render: (hours) => <Tag style={{ borderRadius: 3, background: '#f1f5f9', border: 'none', color: '#334155', fontSize: 11.5 }}>{hours}h</Tag>,
     },
     {
       title: 'Período',
       key: 'period',
-      render: (_, record) => <span style={{ color: '#54595F', fontSize: 13 }}>{record.startDate} a {record.endDate}</span>,
+      width: 170,
+      render: (_, record) => <span style={{ color: '#64748b', fontSize: 12 }}>{record.startDate} ~ {record.endDate}</span>,
     },
     {
-      title: 'Ocupação de Vagas',
+      title: 'Vagas',
       key: 'occupancy',
+      width: 130,
       render: (_, record) => (
-        <span style={{ fontSize: 13, fontWeight: 500, color: '#184080' }}>
-          {record.enrolledCount} / {record.capacity} vagas
+        <span style={{ fontSize: 12, color: '#0f172a' }}>
+          <strong>{record.enrolledCount}</strong> / {record.capacity}
         </span>
       ),
     },
@@ -166,20 +169,22 @@ export const DashboardRH: React.FC = () => {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+      width: 120,
       render: (status: TrainingStatus) => getStatusTag(status),
     },
   ];
 
   return (
-    <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-      <div className="lins-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 }}>
+    <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      {/* Cabeçalho Limpo */}
+      <div className="lins-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
         <div>
-          <Title level={2} className="lins-page-title" style={{ margin: 0, fontSize: 24 }}>
+          <Title level={4} style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>
             Painel Geral do RH
           </Title>
-          <Paragraph type="secondary" style={{ margin: '4px 0 0', color: '#54595F', fontSize: 14 }}>
-            Monitoramento de capacitação técnica, normas regulamentadoras e desenvolvimento de equipes da Lins Agroindustrial.
-          </Paragraph>
+          <Text type="secondary" style={{ fontSize: 12.5 }}>
+            Indicadores e grade de capacitação da Lins Agroindustrial
+          </Text>
         </div>
 
         <Button
@@ -187,82 +192,76 @@ export const DashboardRH: React.FC = () => {
           icon={<PlusOutlined />}
           size="middle"
           onClick={() => setIsModalOpen(true)}
-          style={{
-            backgroundColor: '#0032A0',
-            borderColor: '#0032A0',
-            borderRadius: 6,
-            height: 40,
-            padding: '0 20px',
-            boxShadow: '0 2px 4px rgba(0, 50, 160, 0.15)',
-          }}
+          style={{ backgroundColor: '#0032A0', borderColor: '#0032A0', borderRadius: 4 }}
         >
           Novo Treinamento
         </Button>
       </div>
 
       {loading ? (
-        <div style={{ textAlign: 'center', padding: '60px 0' }}>
-          <Spin size="large" />
+        <div style={{ textAlign: 'center', padding: '40px 0' }}>
+          <Spin />
         </div>
       ) : (
         <>
-          <Row gutter={[16, 16]} style={{ marginBottom: 28 }}>
-            <Col xs={24} sm={12} lg={6}>
-              <Card className="lins-card" bordered={false}>
+          {/* Cards de Indicadores Compactos */}
+          <Row gutter={[12, 12]} style={{ marginBottom: 16 }}>
+            <Col xs={12} sm={6}>
+              <Card className="lins-card" styles={{ body: { padding: '12px 14px' } }}>
                 <Statistic
-                  title={<span style={{ color: '#54595F', fontSize: 13, fontWeight: 500 }}>Treinamentos Ativos</span>}
+                  title={<span style={{ color: '#64748b', fontSize: 11.5, textTransform: 'uppercase', letterSpacing: 0.5 }}>Treinamentos Ativos</span>}
                   value={indicators?.activeTrainings || 0}
-                  valueStyle={{ color: '#0032A0', fontWeight: 700 }}
-                  prefix={<ReadOutlined style={{ color: '#0032A0', marginRight: 8 }} />}
-                  suffix={<span style={{ fontSize: 14, color: '#8c9ba5', fontWeight: 400 }}>/ {indicators?.totalTrainings || 0} total</span>}
+                  valueStyle={{ color: '#0032A0', fontWeight: 700, fontSize: 20 }}
+                  prefix={<ReadOutlined style={{ color: '#0032A0', fontSize: 14 }} />}
+                  suffix={<span style={{ fontSize: 12, color: '#94a3b8', fontWeight: 400 }}>/ {indicators?.totalTrainings || 0}</span>}
                 />
               </Card>
             </Col>
 
-            <Col xs={24} sm={12} lg={6}>
-              <Card className="lins-card" bordered={false}>
+            <Col xs={12} sm={6}>
+              <Card className="lins-card" styles={{ body: { padding: '12px 14px' } }}>
                 <Statistic
-                  title={<span style={{ color: '#54595F', fontSize: 13, fontWeight: 500 }}>Colaboradores Capacitados</span>}
+                  title={<span style={{ color: '#64748b', fontSize: 11.5, textTransform: 'uppercase', letterSpacing: 0.5 }}>Capacitados</span>}
                   value={indicators?.trainedEmployeesCount || 0}
-                  valueStyle={{ color: '#184080', fontWeight: 700 }}
-                  prefix={<TeamOutlined style={{ color: '#00B5AD', marginRight: 8 }} />}
+                  valueStyle={{ color: '#0f172a', fontWeight: 700, fontSize: 20 }}
+                  prefix={<TeamOutlined style={{ color: '#00B5AD', fontSize: 14 }} />}
                 />
               </Card>
             </Col>
 
-            <Col xs={24} sm={12} lg={6}>
-              <Card className="lins-card" bordered={false}>
+            <Col xs={12} sm={6}>
+              <Card className="lins-card" styles={{ body: { padding: '12px 14px' } }}>
                 <Statistic
-                  title={<span style={{ color: '#54595F', fontSize: 13, fontWeight: 500 }}>Taxa Média de Presença</span>}
+                  title={<span style={{ color: '#64748b', fontSize: 11.5, textTransform: 'uppercase', letterSpacing: 0.5 }}>Presença Média</span>}
                   value={indicators?.averageAttendanceRate || 0}
-                  valueStyle={{ color: '#0D9690', fontWeight: 700 }}
+                  valueStyle={{ color: '#0D9690', fontWeight: 700, fontSize: 20 }}
                   precision={1}
-                  prefix={<CheckCircleOutlined style={{ color: '#0D9690', marginRight: 8 }} />}
+                  prefix={<CheckCircleOutlined style={{ color: '#0D9690', fontSize: 14 }} />}
                   suffix="%"
                 />
               </Card>
             </Col>
 
-            <Col xs={24} sm={12} lg={6}>
-              <Card className="lins-card" bordered={false}>
+            <Col xs={12} sm={6}>
+              <Card className="lins-card" styles={{ body: { padding: '12px 14px' } }}>
                 <Statistic
-                  title={<span style={{ color: '#54595F', fontSize: 13, fontWeight: 500 }}>Horas de Capacitação</span>}
+                  title={<span style={{ color: '#64748b', fontSize: 11.5, textTransform: 'uppercase', letterSpacing: 0.5 }}>Horas Realizadas</span>}
                   value={indicators?.totalTrainingHours || 0}
-                  valueStyle={{ color: '#0032A0', fontWeight: 700 }}
-                  prefix={<ClockCircleOutlined style={{ color: '#3063D6', marginRight: 8 }} />}
-                  suffix={<span style={{ fontSize: 14, color: '#54595F' }}>h</span>}
+                  valueStyle={{ color: '#0032A0', fontWeight: 700, fontSize: 20 }}
+                  prefix={<ClockCircleOutlined style={{ color: '#3063D6', fontSize: 14 }} />}
+                  suffix={<span style={{ fontSize: 12, color: '#64748b' }}>h</span>}
                 />
               </Card>
             </Col>
           </Row>
 
+          {/* Tabela de Treinamentos Compacta */}
           <Card
-            title={
-              <span style={{ color: '#184080', fontWeight: 700, fontSize: 16 }}>
-                Programas de Capacitação Corporativa
-              </span>
-            }
-            bordered={false}
+            styles={{
+              header: { minHeight: 40, padding: '0 14px', borderBottom: '1px solid #e2e8f0' },
+              body: { padding: 0 },
+            }}
+            title={<span style={{ color: '#0f172a', fontWeight: 600, fontSize: 13.5 }}>Grade de Treinamentos</span>}
             className="lins-card"
           >
             <div className="table-responsive-wrapper">
@@ -270,114 +269,91 @@ export const DashboardRH: React.FC = () => {
                 rowKey="id"
                 columns={columns}
                 dataSource={trainings}
-                pagination={{ pageSize: 5 }}
+                pagination={{ pageSize: 6, size: 'small' }}
+                size="small"
               />
             </div>
           </Card>
         </>
       )}
 
+      {/* Modal de Criação de Treinamento */}
       <Modal
-        title={
-          <span style={{ color: '#0032A0', fontWeight: 700, fontSize: 16 }}>
-            Cadastrar Novo Programa de Treinamento
-          </span>
-        }
+        title={<span style={{ color: '#0032A0', fontWeight: 600, fontSize: 15 }}>Novo Treinamento</span>}
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         footer={null}
         destroyOnClose
+        width={500}
       >
         <Form
           form={form}
           layout="vertical"
+          size="middle"
           onFinish={handleCreateTraining}
           initialValues={{ capacity: 30, workloadHours: 16, category: 'Segurança do Trabalho' }}
-          style={{ marginTop: 16 }}
+          style={{ marginTop: 12 }}
         >
           <Form.Item
             name="title"
-            label="Título do Treinamento"
-            rules={[{ required: true, message: 'Informe o título do treinamento' }]}
+            label="Título"
+            rules={[{ required: true, message: 'Informe o título' }]}
+            style={{ marginBottom: 12 }}
           >
-            <Input placeholder="Ex: NR-35: Trabalho em Altura na Indústria" />
+            <Input placeholder="Ex: NR-35: Trabalho em Altura" />
           </Form.Item>
 
-          <Row gutter={16}>
+          <Row gutter={12}>
             <Col span={12}>
-              <Form.Item
-                name="category"
-                label="Categoria / Área"
-                rules={[{ required: true }]}
-              >
+              <Form.Item name="category" label="Área" rules={[{ required: true }]} style={{ marginBottom: 12 }}>
                 <Select>
-                  <Option value="Segurança do Trabalho">Segurança do Trabalho (NRs)</Option>
-                  <Option value="Agrícola">Agrícola & Colheita</Option>
-                  <Option value="Indústria">Indústria & Destilaria</Option>
+                  <Option value="Segurança do Trabalho">Segurança (NRs)</Option>
+                  <Option value="Agrícola">Agrícola</Option>
+                  <Option value="Indústria">Indústria</Option>
                   <Option value="Qualidade & BPF">Qualidade & BPF</Option>
-                  <Option value="Liderança">Liderança & Gestão</Option>
+                  <Option value="Liderança">Liderança</Option>
                 </Select>
               </Form.Item>
             </Col>
 
             <Col span={12}>
-              <Form.Item
-                name="instructor"
-                label="Instrutor / Facilitador"
-                rules={[{ required: true, message: 'Informe o nome do instrutor' }]}
-              >
-                <Input placeholder="Ex: Eng. Carlos Silva" />
+              <Form.Item name="instructor" label="Instrutor" rules={[{ required: true }]} style={{ marginBottom: 12 }}>
+                <Input placeholder="Nome do facilitador" />
               </Form.Item>
             </Col>
           </Row>
 
-          <Row gutter={16}>
+          <Row gutter={12}>
             <Col span={12}>
-              <Form.Item
-                name="workloadHours"
-                label="Carga Horária (horas)"
-                rules={[{ required: true }]}
-              >
+              <Form.Item name="workloadHours" label="Carga Horária (h)" rules={[{ required: true }]} style={{ marginBottom: 12 }}>
                 <InputNumber min={1} max={200} style={{ width: '100%' }} />
               </Form.Item>
             </Col>
 
             <Col span={12}>
-              <Form.Item
-                name="capacity"
-                label="Capacidade de Vagas"
-                rules={[{ required: true }]}
-              >
+              <Form.Item name="capacity" label="Vagas" rules={[{ required: true }]} style={{ marginBottom: 12 }}>
                 <InputNumber min={1} max={500} style={{ width: '100%' }} />
               </Form.Item>
             </Col>
           </Row>
 
-          <Form.Item
-            name="location"
-            label="Local de Realização"
-            rules={[{ required: true, message: 'Informe o local ou sala' }]}
-          >
-            <Input placeholder="Ex: Centro de Treinamento Lins - Sala 02" />
+          <Form.Item name="location" label="Local" rules={[{ required: true }]} style={{ marginBottom: 12 }}>
+            <Input placeholder="Ex: Sala 01 CT Lins" />
           </Form.Item>
 
-          <Form.Item name="dates" label="Período de Realização">
+          <Form.Item name="dates" label="Período" style={{ marginBottom: 12 }}>
             <DatePicker.RangePicker style={{ width: '100%' }} />
           </Form.Item>
 
-          <Form.Item name="description" label="Ementa / Conteúdo Programático">
-            <Input.TextArea rows={3} placeholder="Objetivos pedagógicos, normas aplicáveis..." />
+          <Form.Item name="description" label="Ementa / Observações" style={{ marginBottom: 16 }}>
+            <Input.TextArea rows={2} placeholder="Descrição rápida..." />
           </Form.Item>
 
-          <Form.Item style={{ textAlign: 'right', marginBottom: 0, marginTop: 24 }}>
+          <Form.Item style={{ textAlign: 'right', marginBottom: 0 }}>
             <Space>
               <Button onClick={() => setIsModalOpen(false)}>Cancelar</Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ backgroundColor: '#0032A0', borderColor: '#0032A0' }}
-              >
-                Salvar Treinamento
+              <Button type="primary" htmlType="submit" style={{ backgroundColor: '#0032A0', borderColor: '#0032A0' }}>
+                Salvar
               </Button>
             </Space>
           </Form.Item>

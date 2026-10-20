@@ -17,7 +17,7 @@ import {
 } from '@ant-design/icons';
 import type { Certificate } from '../../lib/types/certificate';
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Text } = Typography;
 const { Search } = Input;
 
 const validCertificatesDatabase: Record<string, Certificate> = {
@@ -25,7 +25,7 @@ const validCertificatesDatabase: Record<string, Certificate> = {
     id: 'cert-1',
     code: 'LINS-NR13-2026-X8892',
     employeeName: 'José Aparecido da Silva',
-    employeeDocument: 'Matrícula: MAT-14829',
+    employeeDocument: 'MAT-14829',
     trainingTitle: 'NR-13: Segurança Operacional em Caldeiras e Destilaria',
     workloadHours: 16,
     issueDate: '2026-10-18',
@@ -37,7 +37,7 @@ const validCertificatesDatabase: Record<string, Certificate> = {
     id: 'cert-2',
     code: 'LINS-NR31-2026-B3419',
     employeeName: 'Anderson Rodrigo Lima',
-    employeeDocument: 'Matrícula: MAT-12903',
+    employeeDocument: 'MAT-12903',
     trainingTitle: 'NR-31: Segurança e Saúde no Trabalho Agroindustrial',
     workloadHours: 20,
     issueDate: '2026-10-15',
@@ -69,62 +69,62 @@ export const ValidacaoPublica: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: 840, margin: '0 auto' }}>
-      <div style={{ textAlign: 'center', marginBottom: 32 }}>
+    <div style={{ maxWidth: 640, margin: '20px auto 0' }}>
+      <div style={{ textAlign: 'center', marginBottom: 20 }}>
         <img
           src="https://linsagro.com.br/wp-content/uploads/2022/07/cropped-Lins_Logo_Horizontal_RGB_Preferencial_20250512_Keenwork_AF.png"
           alt="Lins Agroindustrial"
-          style={{ height: 44, objectFit: 'contain', marginBottom: 12 }}
+          style={{ height: 34, objectFit: 'contain', marginBottom: 8 }}
         />
-        <Title level={2} className="lins-page-title" style={{ margin: 0, fontSize: 24 }}>
-          Portal de Validação Pública de Certificados
+        <Title level={4} style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>
+          Validação Pública de Certificados
         </Title>
-        <Paragraph type="secondary" style={{ marginTop: 6, color: '#54595F', fontSize: 14 }}>
-          Consulte e comprove a autenticidade de certificações emitidas pela Universidade Corporativa da Lins Agroindustrial.
-        </Paragraph>
+        <Text type="secondary" style={{ fontSize: 12.5 }}>
+          Autenticidade de certificações emitidas pela Lins Agroindustrial
+        </Text>
       </div>
 
-      <Card bordered={false} className="lins-card" style={{ marginBottom: 24, padding: '12px 16px' }}>
-        <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-          <Text strong style={{ color: '#184080', fontSize: 14 }}>
-            Informe o código autenticador do certificado:
+      <Card bordered={false} className="lins-card" styles={{ body: { padding: '16px' } }} style={{ marginBottom: 16 }}>
+        <Space direction="vertical" size="small" style={{ width: '100%' }}>
+          <Text strong style={{ color: '#334155', fontSize: 12.5 }}>
+            Código autenticador:
           </Text>
           <Search
             placeholder="Ex: LINS-NR13-2026-X8892"
-            enterButton="Validar Certificado"
-            size="large"
+            enterButton="Validar"
+            size="middle"
             value={queryCode}
             onChange={(e) => setQueryCode(e.target.value)}
             onSearch={handleSearch}
           />
 
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: 6 }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
             <Button
               icon={<QrcodeOutlined style={{ color: '#00B5AD' }} />}
-              type="dashed"
+              type="link"
+              size="small"
               onClick={handleSimulateQRCode}
-              style={{ borderRadius: 6, color: '#184080' }}
+              style={{ fontSize: 12, color: '#0032A0' }}
             >
-              Simular Leitura de QR Code
+              Simular leitura de QR Code
             </Button>
           </div>
         </Space>
       </Card>
 
       {searched && (
-        <Card bordered={false} className="lins-card">
+        <Card bordered={false} className="lins-card" styles={{ body: { padding: '16px' } }}>
           {verifiedCert ? (
             <Result
               status="success"
-              title={<span style={{ color: '#0032A0', fontWeight: 700 }}>Certificado Autêntico e Registrado</span>}
-              subTitle={<span style={{ color: '#54595F' }}>Registro oficial ativo na base da Lins Agroindustrial sob o código <strong>{verifiedCert.code}</strong></span>}
+              title={<span style={{ color: '#0032A0', fontWeight: 700, fontSize: 16 }}>Certificado Válido</span>}
+              subTitle={<span style={{ color: '#64748b', fontSize: 12 }}>Registro oficial <strong>{verifiedCert.code}</strong></span>}
               extra={[
-                <div key="details" style={{ textAlign: 'left', marginTop: 16 }}>
-                  <Divider style={{ margin: '12px 0 20px', borderColor: '#e7e7e7' }} />
+                <div key="details" style={{ textAlign: 'left', marginTop: 12 }}>
+                  <Divider style={{ margin: '8px 0 14px', borderColor: '#e2e8f0' }} />
                   <Descriptions
-                    title={<span style={{ color: '#184080', fontSize: 15 }}>Dados Oficiais de Capacitação</span>}
                     bordered
-                    size="middle"
+                    size="small"
                     column={{ xs: 1, sm: 2 }}
                   >
                     <Descriptions.Item label="Colaborador">
@@ -133,20 +133,20 @@ export const ValidacaoPublica: React.FC = () => {
                     <Descriptions.Item label="Identificação">
                       {verifiedCert.employeeDocument}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Treinamento Técnico" span={2}>
+                    <Descriptions.Item label="Treinamento" span={2}>
                       <strong>{verifiedCert.trainingTitle}</strong>
                     </Descriptions.Item>
-                    <Descriptions.Item label="Carga Horária">
-                      {verifiedCert.workloadHours} horas presenciais
+                    <Descriptions.Item label="Carga">
+                      {verifiedCert.workloadHours} horas
                     </Descriptions.Item>
-                    <Descriptions.Item label="Data de Conclusão">
+                    <Descriptions.Item label="Conclusão">
                       {verifiedCert.completionDate}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Instrutor">
+                    <Descriptions.Item label="Instrutor" span={2}>
                       {verifiedCert.instructorName}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Situação Cadastral">
-                      <Tag color="cyan" icon={<CheckCircleOutlined />} style={{ borderRadius: 4, background: '#e6f7f6', color: '#0d9690', borderColor: '#b3e7e4', fontWeight: 600 }}>
+                    <Descriptions.Item label="Status" span={2}>
+                      <Tag color="cyan" icon={<CheckCircleOutlined />} style={{ borderRadius: 3, fontSize: 11 }}>
                         Ativo e Conforme
                       </Tag>
                     </Descriptions.Item>
@@ -157,16 +157,16 @@ export const ValidacaoPublica: React.FC = () => {
           ) : (
             <Result
               status="error"
-              title="Registro Não Encontrado"
-              subTitle="O código digitado não corresponde a nenhum certificado emitido pela Lins Agroindustrial."
+              title={<span style={{ fontSize: 15 }}>Não Encontrado</span>}
+              subTitle={<span style={{ fontSize: 12 }}>O código não corresponde a nenhum certificado ativo.</span>}
               extra={[
                 <Alert
                   key="alert"
-                  message="Dica de Verificação"
-                  description="Verifique se o código informado confere exatamente com a identificação impressa no rodapé do certificado (Ex: LINS-NR13-2026-X8892)."
+                  message="Dica"
+                  description="Verifique o código impresso no certificado (Ex: LINS-NR13-2026-X8892)."
                   type="warning"
                   showIcon
-                  style={{ borderRadius: 6, textAlign: 'left' }}
+                  style={{ borderRadius: 4, textAlign: 'left', fontSize: 12 }}
                 />,
               ]}
             />
