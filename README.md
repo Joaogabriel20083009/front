@@ -1,32 +1,49 @@
-# React + TypeScript + Vite
+# Gestão Inteligente de Treinamentos Internos de RH — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Interface web moderna desenvolvida com **React 19, Vite, TypeScript e Ant Design (antd)** durante o Hackathon de 24 horas.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Tecnologias
 
-## React Compiler
+- **React 19** + **Vite**
+- **TypeScript** (Modo estrito)
+- **Ant Design 5.x** (`antd` + `@ant-design/icons`)
+- **React Router DOM 7.x**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## 📌 Funcionalidades Principais
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+1. **Dashboard do RH (`/rh`):** Indicadores estratégicos (KPIs), listagem de treinamentos corporativos e cadastro de novas turmas.
+2. **Portal do Líder (`/lider`):** Catálogo de capacitações abertas, acompanhamento de vagas e reserva de equipe.
+3. **Painel do Instrutor (`/instrutor`):** Chamada de presença com assistência visual por câmera/captura facial client-side.
+4. **Certificados (`/certificados`):** Emissão, visualização com layout de diploma e exportação para impressão/PDF.
+5. **Validação Pública (`/validar`):** Consulta aberta de autenticidade de certificados por código ou leitura de QR Code.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+---
+
+## 🛠️ Como Executar o Projeto
+
+```bash
+# 1. Instalar dependências
+npm install
+
+# 2. Iniciar servidor de desenvolvimento local
+npm run dev
+
+# 3. Compilação para produção
+npm run build
+
+# 4. Checagem de tipos e lint
+npm run lint
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+---
+
+## 📂 Documentação de Arquitetura e Governança
+
+- [PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md) — Visão do produto e requisitos.
+- [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md) — Paleta de cores, tipografia e tokens Ant Design.
+- [ARCHITECTURE.md](./ARCHITECTURE.md) — Estrutura de pastas, serviços e camada de mocks.
+- [AGENTS.md](./AGENTS.md) — Diretrizes estritas de escopo (Frontend exclusivo).
