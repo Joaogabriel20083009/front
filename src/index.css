@@ -87,13 +87,9 @@ html, body {
   border-right: 1px solid #e2e8f0;
 }
 
-.app-sider .ant-layout-sider-trigger {
-  background: #f8fafc !important;
-  color: #0032a0 !important;
-  border-top: 1px solid #e2e8f0;
-  border-right: 1px solid #e2e8f0;
-  height: 40px;
-  line-height: 40px;
+.app-sider .ant-layout-sider-trigger,
+.ant-layout-sider-zero-width-trigger {
+  display: none !important;
 }
 
 .app-sider .ant-menu-item {

@@ -120,6 +120,7 @@ export const MainLayout: React.FC = () => {
           onCollapse={(value) => setCollapsed(value)}
           breakpoint="lg"
           collapsedWidth={0}
+          trigger={null}
           width={210}
           className="app-sider desktop-sider"
           theme="light"
