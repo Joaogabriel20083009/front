@@ -79,6 +79,7 @@ export const PortalLider: React.FC = () => {
       <Row gutter={[12, 12]}>
         {mockTrainings.map((training) => {
           const availableSlots = training.capacity - training.enrolledCount;
+          const isFullOrDone = availableSlots <= 0 || training.status === 'concluido';
           return (
             <Col xs={24} sm={12} lg={8} key={training.id}>
               <Card
@@ -92,8 +93,14 @@ export const PortalLider: React.FC = () => {
                     <Tag style={{ borderRadius: 3, border: 'none', background: '#ebf2ff', color: '#0032a0', fontSize: 11, margin: 0 }}>
                       {training.category}
                     </Tag>
-                    <span style={{ fontSize: 11, color: availableSlots > 5 ? '#0D9690' : '#d97706', fontWeight: 600 }}>
-                      {availableSlots} vagas
+                    <span
+                      style={{
+                        fontSize: 11,
+                        color: availableSlots > 5 ? '#0D9690' : availableSlots > 0 ? '#d97706' : '#DC2626',
+                        fontWeight: 600,
+                      }}
+                    >
+                      {availableSlots > 0 ? `${availableSlots} vagas` : 'Esgotado'}
                     </span>
                   </div>
                 }
@@ -119,21 +126,35 @@ export const PortalLider: React.FC = () => {
                 </div>
 
                 <Button
-                  type="primary"
-                  icon={<UsergroupAddOutlined />}
+                  type={isFullOrDone ? 'default' : 'primary'}
+                  icon={!isFullOrDone ? <UsergroupAddOutlined /> : undefined}
                   block
                   size="small"
                   onClick={() => handleOpenEnrollment(training)}
-                  disabled={availableSlots <= 0 || training.status === 'concluido'}
+                  disabled={isFullOrDone}
                   style={{
-                    backgroundColor: '#0032A0',
-                    borderColor: '#0032A0',
                     borderRadius: 4,
                     height: 30,
                     fontSize: 12,
+                    ...(isFullOrDone
+                      ? {
+                          backgroundColor: '#f1f5f9',
+                          borderColor: '#e2e8f0',
+                          color: '#94a3b8',
+                          cursor: 'not-allowed',
+                        }
+                      : {
+                          backgroundColor: '#0032A0',
+                          borderColor: '#0032A0',
+                          color: '#ffffff',
+                        }),
                   }}
                 >
-                  Indicar Equipe
+                  {training.status === 'concluido'
+                    ? 'Treinamento Concluído'
+                    : availableSlots <= 0
+                    ? 'Vagas Esgotadas'
+                    : 'Indicar Equipe'}
                 </Button>
               </Card>
             </Col>

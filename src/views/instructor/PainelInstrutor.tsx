@@ -231,11 +231,16 @@ export const PainelInstrutor: React.FC = () => {
               Identificar
             </Button>
             <Button
-              type="primary"
+              type={simulatedMatchName ? 'primary' : 'default'}
               size="small"
               disabled={!simulatedMatchName}
               onClick={handleConfirmFacialAttendance}
-              style={{ backgroundColor: '#0032A0', borderColor: '#0032A0', borderRadius: 4 }}
+              style={{
+                borderRadius: 4,
+                ...(simulatedMatchName
+                  ? { backgroundColor: '#0032A0', borderColor: '#0032A0', color: '#ffffff' }
+                  : { backgroundColor: '#f1f5f9', borderColor: '#e2e8f0', color: '#94a3b8' }),
+              }}
             >
               Confirmar Presença
             </Button>
