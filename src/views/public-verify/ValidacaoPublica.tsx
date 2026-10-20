@@ -84,7 +84,7 @@ export const ValidacaoPublica: React.FC = () => {
         </Text>
       </div>
 
-      <Card variant="borderless" className="lins-card" styles={{ body: { padding: '16px' } }} style={{ marginBottom: 16 }}>
+      <Card variant="borderless" className="ios-liquid-balloon" styles={{ body: { padding: '20px 22px' } }} style={{ marginBottom: 16 }}>
         <Space direction="vertical" size="small" style={{ width: '100%' }}>
           <Text strong style={{ color: '#334155', fontSize: 12.5 }}>
             Código autenticador:
@@ -113,7 +113,7 @@ export const ValidacaoPublica: React.FC = () => {
       </Card>
 
       {searched && (
-        <Card variant="borderless" className="lins-card" styles={{ body: { padding: '16px' } }}>
+        <Card variant="borderless" className="ios-liquid-balloon" styles={{ body: { padding: '20px 22px' } }}>
           {verifiedCert ? (
             <Result
               status="success"

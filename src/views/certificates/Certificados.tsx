@@ -88,10 +88,10 @@ export const Certificados: React.FC = () => {
         {mockCertificates.map((cert) => (
           <Col xs={24} sm={12} lg={8} key={cert.id}>
             <Card
-              className="lins-card"
+              className="ios-liquid-balloon"
               styles={{
-                header: { minHeight: 38, padding: '0 12px', borderBottom: '1px solid #f1f5f9' },
-                body: { padding: '12px' },
+                header: { minHeight: 38, padding: '0 14px', borderBottom: '1px solid rgba(226, 232, 240, 0.7)' },
+                body: { padding: '14px' },
               }}
               title={
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

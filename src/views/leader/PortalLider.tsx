@@ -11,6 +11,7 @@ import {
   List,
   Avatar,
   message,
+  Segmented,
 } from 'antd';
 import {
   UsergroupAddOutlined,
@@ -42,6 +43,7 @@ export const PortalLider: React.FC = () => {
   const [selectedTraining, setSelectedTraining] = useState<Training | null>(null);
   const [selectedMemberIds, setSelectedMemberIds] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [categoryFilter, setCategoryFilter] = useState<string>('todos');
 
   const handleOpenEnrollment = (training: Training) => {
     setSelectedTraining(training);
@@ -64,29 +66,50 @@ export const PortalLider: React.FC = () => {
     );
   };
 
+  const filteredTrainings = mockTrainings.filter((t) => {
+    if (categoryFilter === 'todos') return true;
+    return t.category === categoryFilter;
+  });
+
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-      <div className="lins-page-header" style={{ marginBottom: 16 }}>
-        <Title level={4} style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>
-          Portal do Líder
-        </Title>
-        <Text type="secondary" style={{ fontSize: 12.5 }}>
-          Selecione capacitações para indicar e inscrever operadores da sua frente
-        </Text>
+      <div className="lins-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18, flexWrap: 'wrap', gap: 12 }}>
+        <div>
+          <Title level={4} style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>
+            Portal do Líder
+          </Title>
+          <Text type="secondary" style={{ fontSize: 12.5 }}>
+            Selecione capacitações para indicar e inscrever operadores da sua frente
+          </Text>
+        </div>
+
+        <Segmented
+          className="ios-segmented-toggle"
+          size="small"
+          value={categoryFilter}
+          onChange={(val) => setCategoryFilter(val as string)}
+          options={[
+            { label: 'Todas as Áreas', value: 'todos' },
+            { label: 'Segurança (NRs)', value: 'Segurança do Trabalho' },
+            { label: 'Agrícola', value: 'Agrícola' },
+            { label: 'Indústria', value: 'Indústria' },
+            { label: 'Liderança', value: 'Liderança' },
+          ]}
+        />
       </div>
 
-      {/* Grid Compacto com 3 colunas */}
-      <Row gutter={[12, 12]}>
-        {mockTrainings.map((training) => {
+      {/* Grid com Balões Liquid Glass iOS */}
+      <Row gutter={[14, 14]}>
+        {filteredTrainings.map((training) => {
           const availableSlots = training.capacity - training.enrolledCount;
           const isFullOrDone = availableSlots <= 0 || training.status === 'concluido';
           return (
             <Col xs={24} sm={12} lg={8} key={training.id}>
               <Card
-                className="lins-card"
+                className="ios-liquid-balloon"
                 styles={{
-                  header: { minHeight: 38, padding: '0 12px', borderBottom: '1px solid #f1f5f9' },
-                  body: { padding: '12px' },
+                  header: { minHeight: 38, padding: '0 14px', borderBottom: '1px solid rgba(226, 232, 240, 0.7)' },
+                  body: { padding: '14px' },
                 }}
                 title={
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

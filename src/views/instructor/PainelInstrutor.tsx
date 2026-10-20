@@ -8,9 +8,12 @@ import {
   Typography,
   Modal,
   Alert,
-  Radio,
   message,
   Avatar,
+  Segmented,
+  Row,
+  Col,
+  Statistic,
 } from 'antd';
 import {
   CameraOutlined,
@@ -109,19 +112,21 @@ export const PainelInstrutor: React.FC = () => {
       },
     },
     {
-      title: 'Ação Rápida',
+      title: 'Ação Rápida (Toggle)',
       key: 'actions',
-      width: 220,
+      width: 250,
       render: (_, record) => (
-        <Radio.Group
+        <Segmented
+          className="ios-segmented-toggle"
           size="small"
           value={record.status}
-          onChange={(e) => updateStatus(record.id, e.target.value)}
-        >
-          <Radio.Button value="presente">Presente</Radio.Button>
-          <Radio.Button value="ausente">Ausente</Radio.Button>
-          <Radio.Button value="justificado">Justificado</Radio.Button>
-        </Radio.Group>
+          onChange={(val) => updateStatus(record.id, val as AttendanceStatus)}
+          options={[
+            { label: 'Presente', value: 'presente' },
+            { label: 'Ausente', value: 'ausente' },
+            { label: 'Justificado', value: 'justificado' },
+          ]}
+        />
       ),
     },
   ];
@@ -151,6 +156,46 @@ export const PainelInstrutor: React.FC = () => {
           Chamada com Câmera
         </Button>
       </div>
+
+      {/* Balões de Frequência com Liquid Glass iOS */}
+      <Row gutter={[12, 12]} style={{ marginBottom: 16 }}>
+        <Col xs={12} sm={6}>
+          <Card className="ios-liquid-balloon" styles={{ body: { padding: '12px 14px' } }}>
+            <Statistic
+              title={<span style={{ color: '#64748b', fontSize: 11, fontWeight: 600, textTransform: 'uppercase' }}>Convocados</span>}
+              value={attendees.length}
+              valueStyle={{ color: '#0f172a', fontWeight: 800, fontSize: 20 }}
+            />
+          </Card>
+        </Col>
+        <Col xs={12} sm={6}>
+          <Card className="ios-liquid-balloon" styles={{ body: { padding: '12px 14px' } }}>
+            <Statistic
+              title={<span style={{ color: '#64748b', fontSize: 11, fontWeight: 600, textTransform: 'uppercase' }}>Presentes</span>}
+              value={attendees.filter((a) => a.status === 'presente').length}
+              valueStyle={{ color: '#10b981', fontWeight: 800, fontSize: 20 }}
+            />
+          </Card>
+        </Col>
+        <Col xs={12} sm={6}>
+          <Card className="ios-liquid-balloon" styles={{ body: { padding: '12px 14px' } }}>
+            <Statistic
+              title={<span style={{ color: '#64748b', fontSize: 11, fontWeight: 600, textTransform: 'uppercase' }}>Ausentes</span>}
+              value={attendees.filter((a) => a.status === 'ausente').length}
+              valueStyle={{ color: '#ef4444', fontWeight: 800, fontSize: 20 }}
+            />
+          </Card>
+        </Col>
+        <Col xs={12} sm={6}>
+          <Card className="ios-liquid-balloon" styles={{ body: { padding: '12px 14px' } }}>
+            <Statistic
+              title={<span style={{ color: '#64748b', fontSize: 11, fontWeight: 600, textTransform: 'uppercase' }}>Justificados</span>}
+              value={attendees.filter((a) => a.status === 'justificado').length}
+              valueStyle={{ color: '#f59e0b', fontWeight: 800, fontSize: 20 }}
+            />
+          </Card>
+        </Col>
+      </Row>
 
       <Card
         className="lins-card"

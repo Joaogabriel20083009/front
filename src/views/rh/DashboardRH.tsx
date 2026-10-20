@@ -17,6 +17,8 @@ import {
   DatePicker,
   message,
   Spin,
+  Segmented,
+  Switch,
 } from 'antd';
 import {
   PlusOutlined,
@@ -38,6 +40,7 @@ export const DashboardRH: React.FC = () => {
   const [indicators, setIndicators] = useState<RHIndicators | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [statusFilter, setStatusFilter] = useState<string>('todos');
   const [form] = Form.useForm();
 
   const reloadData = React.useCallback(async () => {
@@ -172,7 +175,32 @@ export const DashboardRH: React.FC = () => {
       width: 120,
       render: (status: TrainingStatus) => getStatusTag(status),
     },
+    {
+      title: 'Ação (Toggle)',
+      key: 'toggleAction',
+      width: 130,
+      render: (_, record) => (
+        <Switch
+          size="small"
+          checked={record.status === 'em_andamento'}
+          checkedChildren="Ativo"
+          unCheckedChildren="Pausa"
+          onChange={(checked) => {
+            const newStatus: TrainingStatus = checked ? 'em_andamento' : 'planejado';
+            setTrainings((prev) =>
+              prev.map((t) => (t.id === record.id ? { ...t, status: newStatus } : t))
+            );
+            message.success(`Status de "${record.title}" alterado para ${checked ? 'Em Andamento' : 'Planejado'}.`);
+          }}
+        />
+      ),
+    },
   ];
+
+  const filteredTrainings = trainings.filter((t) => {
+    if (statusFilter === 'todos') return true;
+    return t.status === statusFilter;
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -204,74 +232,93 @@ export const DashboardRH: React.FC = () => {
         </div>
       ) : (
         <>
-          {/* Cards de Indicadores Compactos */}
-          <Row gutter={[12, 12]} style={{ marginBottom: 16 }}>
+          {/* Balões de Indicadores com Liquid Glass iOS */}
+          <Row gutter={[12, 12]} style={{ marginBottom: 18 }}>
             <Col xs={12} sm={12} md={6}>
-              <Card className="lins-card" styles={{ body: { padding: '12px 14px' } }}>
+              <Card className="ios-liquid-balloon" styles={{ body: { padding: '14px 16px' } }}>
                 <Statistic
-                  title={<span style={{ color: '#64748b', fontSize: 11.5, textTransform: 'uppercase', letterSpacing: 0.5 }}>Treinamentos Ativos</span>}
+                  title={<span style={{ color: '#64748b', fontSize: 11.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>Treinamentos Ativos</span>}
                   value={indicators?.activeTrainings || 0}
-                  valueStyle={{ color: '#0032A0', fontWeight: 700, fontSize: 20 }}
-                  prefix={<ReadOutlined style={{ color: '#0032A0', fontSize: 14 }} />}
-                  suffix={<span style={{ fontSize: 12, color: '#94a3b8', fontWeight: 400 }}>/ {indicators?.totalTrainings || 0}</span>}
+                  valueStyle={{ color: '#0032A0', fontWeight: 800, fontSize: 22 }}
+                  prefix={<ReadOutlined style={{ color: '#0032A0', fontSize: 15 }} />}
+                  suffix={<span style={{ fontSize: 12, color: '#94a3b8', fontWeight: 500 }}>/ {indicators?.totalTrainings || 0}</span>}
                 />
               </Card>
             </Col>
 
             <Col xs={12} sm={12} md={6}>
-              <Card className="lins-card" styles={{ body: { padding: '12px 14px' } }}>
+              <Card className="ios-liquid-balloon" styles={{ body: { padding: '14px 16px' } }}>
                 <Statistic
-                  title={<span style={{ color: '#64748b', fontSize: 11.5, textTransform: 'uppercase', letterSpacing: 0.5 }}>Capacitados</span>}
+                  title={<span style={{ color: '#64748b', fontSize: 11.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>Capacitados</span>}
                   value={indicators?.trainedEmployeesCount || 0}
-                  valueStyle={{ color: '#0f172a', fontWeight: 700, fontSize: 20 }}
-                  prefix={<TeamOutlined style={{ color: '#00B5AD', fontSize: 14 }} />}
+                  valueStyle={{ color: '#0f172a', fontWeight: 800, fontSize: 22 }}
+                  prefix={<TeamOutlined style={{ color: '#00B5AD', fontSize: 15 }} />}
                 />
               </Card>
             </Col>
 
             <Col xs={12} sm={12} md={6}>
-              <Card className="lins-card" styles={{ body: { padding: '12px 14px' } }}>
+              <Card className="ios-liquid-balloon" styles={{ body: { padding: '14px 16px' } }}>
                 <Statistic
-                  title={<span style={{ color: '#64748b', fontSize: 11.5, textTransform: 'uppercase', letterSpacing: 0.5 }}>Presença Média</span>}
+                  title={<span style={{ color: '#64748b', fontSize: 11.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>Presença Média</span>}
                   value={indicators?.averageAttendanceRate || 0}
-                  valueStyle={{ color: '#0D9690', fontWeight: 700, fontSize: 20 }}
+                  valueStyle={{ color: '#0D9690', fontWeight: 800, fontSize: 22 }}
                   precision={1}
-                  prefix={<CheckCircleOutlined style={{ color: '#0D9690', fontSize: 14 }} />}
+                  prefix={<CheckCircleOutlined style={{ color: '#0D9690', fontSize: 15 }} />}
                   suffix="%"
                 />
               </Card>
             </Col>
 
             <Col xs={12} sm={12} md={6}>
-              <Card className="lins-card" styles={{ body: { padding: '12px 14px' } }}>
+              <Card className="ios-liquid-balloon" styles={{ body: { padding: '14px 16px' } }}>
                 <Statistic
-                  title={<span style={{ color: '#64748b', fontSize: 11.5, textTransform: 'uppercase', letterSpacing: 0.5 }}>Horas Realizadas</span>}
+                  title={<span style={{ color: '#64748b', fontSize: 11.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>Horas Realizadas</span>}
                   value={indicators?.totalTrainingHours || 0}
-                  valueStyle={{ color: '#0032A0', fontWeight: 700, fontSize: 20 }}
-                  prefix={<ClockCircleOutlined style={{ color: '#3063D6', fontSize: 14 }} />}
+                  valueStyle={{ color: '#0032A0', fontWeight: 800, fontSize: 22 }}
+                  prefix={<ClockCircleOutlined style={{ color: '#3063D6', fontSize: 15 }} />}
                   suffix={<span style={{ fontSize: 12, color: '#64748b' }}>h</span>}
                 />
               </Card>
             </Col>
           </Row>
 
-          {/* Tabela de Treinamentos Compacta com Rolagem Horizontal Suave */}
+          {/* Tabela de Treinamentos Compacta com Toggle iOS de Filtro de Ações */}
           <Card
             styles={{
-              header: { minHeight: 40, padding: '0 14px', borderBottom: '1px solid #e2e8f0' },
+              header: { minHeight: 46, padding: '0 16px', borderBottom: '1px solid rgba(226, 232, 240, 0.7)' },
               body: { padding: 0 },
             }}
-            title={<span style={{ color: '#0f172a', fontWeight: 600, fontSize: 13.5 }}>Grade de Treinamentos</span>}
+            title={
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
+                <div>
+                  <span style={{ color: '#0f172a', fontWeight: 700, fontSize: 13.5 }}>Grade de Treinamentos</span>
+                  <span style={{ fontSize: 11.5, color: '#64748b', marginLeft: 8 }}>({filteredTrainings.length})</span>
+                </div>
+                <Segmented
+                  className="ios-segmented-toggle"
+                  size="small"
+                  value={statusFilter}
+                  onChange={(val) => setStatusFilter(val as string)}
+                  options={[
+                    { label: 'Todas as Ações', value: 'todos' },
+                    { label: 'Em Andamento', value: 'em_andamento' },
+                    { label: 'Planejados', value: 'planejado' },
+                    { label: 'Concluídos', value: 'concluido' },
+                  ]}
+                />
+              </div>
+            }
             className="lins-card"
           >
             <div className="table-responsive-wrapper">
               <Table
                 rowKey="id"
                 columns={columns}
-                dataSource={trainings}
+                dataSource={filteredTrainings}
                 pagination={{ pageSize: 6, size: 'small' }}
                 size="small"
-                scroll={{ x: 680 }}
+                scroll={{ x: 740 }}
               />
             </div>
           </Card>
