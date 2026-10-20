@@ -1,4 +1,4 @@
-/* Reset e Configurações Globais da Aplicação */
+/* Reset e Configurações Globais - Estilo Clean Lins Agroindustrial */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -8,9 +8,9 @@ html, body {
   padding: 0;
   height: 100%;
   width: 100%;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background-color: #f8fafc;
-  color: #0f172a;
+  font-family: 'Noto Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f8fbfd;
+  color: #3d3d3d;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -23,14 +23,31 @@ html, body {
 
 /* Utilitários Visuais */
 .card-hover-shadow {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  border: 1px solid #e7e7e7 !important;
 }
 
 .card-hover-shadow:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 8px 20px -4px rgba(0, 50, 160, 0.08);
 }
 
 .table-responsive-wrapper {
   overflow-x: auto;
+}
+
+/* Badge personalizado Lins Verde/Ciano */
+.lins-tag-primary {
+  background-color: #ebf2ff !important;
+  color: #0032a0 !important;
+  border-color: #d0e1fd !important;
+  font-weight: 500;
+}
+
+.lins-tag-teal {
+  background-color: #e6f7f6 !important;
+  color: #0d9690 !important;
+  border-color: #b3e7e4 !important;
+  font-weight: 500;
 }

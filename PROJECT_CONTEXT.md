@@ -1,56 +1,31 @@
-# Contexto do Projeto: Gestão Inteligente de Treinamentos Internos de RH
+# Contexto do Projeto: Lins Agroindustrial — Gestão de Treinamentos RH
 
-## 1. Visão Geral do Produto
-A plataforma **Gestão Inteligente de Treinamentos Internos de RH** é uma solução corporativa desenvolvida no contexto de um hackathon de 24 horas. O objetivo principal é centralizar, modernizar e agilizar o ciclo de vida dos programas de capacitação e desenvolvimento das organizações, desde o planejamento pelo RH até a validação pública de certificados digitais.
+## 1. Visão Geral da Empresa e do Produto
+A **Lins Agroindustrial S/A** ([linsagro.com.br](https://linsagro.com.br/)) é uma empresa sucroenergética com mais de 18 anos de atuação, referência na produção de etanol, açúcar e levedura na região de Lins/SP.
 
-A plataforma substitui controles manuais e planilhas descentralizadas por um ecossistema integrado que conecta RH, líderes operacionais, instrutores internos e colaboradores.
+A plataforma **Gestão Inteligente de Treinamentos Internos de RH** atende à demanda de capacitação contínua para mais de 1.500 colaboradores das frentes agrícolas, industriais, manutenção e áreas de apoio, garantindo:
+- Conformidade estrita com Normas Regulamentadoras (NR-31 agrícola, NR-13 caldeiras, NR-35 trabalho em altura, NR-12 máquinas).
+- Capacitação em colheita mecanizada, plantio, fermentação e controle de qualidade de açúcar e bioenergia.
+- Emissão e validação pública instantânea de certificados digitais de conclusão.
 
 ---
 
 ## 2. Perfis de Usuários (Personas)
 
-| Perfil | Responsabilidades Principais |
+| Perfil | Responsabilidades na Lins Agroindustrial |
 | :--- | :--- |
-| **Gestor / Analista de RH** | Criação e gestão de programas de treinamento, monitoramento de KPIs e engajamento, alocação de turmas e emissão de certificados. |
-| **Líder de Equipe / Gestor Direto** | Consulta ao catálogo de capacitações abertas, indicação/inscrição de colaboradores do seu time e gestão das vagas alocadas. |
-| **Instrutor / Facilitador** | Acompanhamento da lista de presença/convocados e realização da chamada em tempo real (com suporte a captura facial client-side para auxílio visual). |
-| **Colaborador / Aluno** | Visualização de seus treinamentos, presença e download de certificados de conclusão. |
-| **Público Geral / Auditoria** | Consulta e verificação da autenticidade de certificados emitidos através de código validador ou QR Code. |
+| **DHO / RH Corporativo** | Planejamento da grade de treinamentos para o período de entressafra e safra, controle de KPIs e emissão de diplomas técnicos. |
+| **Líder de Frente / Supervisor Agrícola e Industrial** | Consulta de vagas abertas e indicação de operadores de colhedora, tratoristas, motoristas canavieiros e mecânicos. |
+| **Instrutor Técnico / Engenheiro de Segurança** | Controle de frequência em sala/campo com auxílio visual por câmera para conferência rápida de presença. |
+| **Operador / Aluno** | Consulta de treinamentos realizados e download de seus certificados. |
+| **Auditoria e Fiscalização Externa** | Validação pública de autenticidade dos certificados emitidos por código validador ou QR Code. |
 
 ---
 
-## 3. Escopo Funcional do Frontend
+## 3. Escopo das 5 Telas da Aplicação
 
-A aplicação frontend é organizada em torno de cinco módulos centrais:
-
-1. **Dashboard do RH**
-   - Indicadores estratégicos (KPIs): Total de treinamentos ativos, colaboradores capacitados, taxa média de presença e horas totais de treinamento.
-   - Listagem gerencial de treinamentos (status: Em Aberto, Em Andamento, Concluído, Cancelado).
-   - Formulário de criação/edição de treinamentos (título, ementa, carga horária, instrutor, capacidade e datas).
-
-2. **Portal do Líder**
-   - Catálogo de treinamentos disponíveis para inscrição.
-   - Filtros por competência, área e datas.
-   - Seleção de colaboradores liderados e reserva de vagas.
-
-3. **Painel do Instrutor**
-   - Visão da turma e lista de convocados.
-   - Controle de frequência/chamada em tempo real (Presente / Ausente / Justificado).
-   - Interface de captura facial com webcam client-side para agilizar a conferência visual de participantes (sem pretensão de biometria pericial ou autenticação bancária).
-
-4. **Certificados**
-   - Consulta e visualização gráfica de certificados emitidos.
-   - Pré-visualização com dados do curso, carga horária, data de conclusão e código autenticador.
-   - Exportação e impressão de certificados.
-
-5. **Validação Pública**
-   - Tela pública sem necessidade de login.
-   - Busca por código verificador ou leitura de QR Code.
-   - Apresentação do status de autenticidade e metadados do certificado.
-
----
-
-## 4. Limites de Escopo e Diretrizes do Hackathon
-- **Frontend Exclusivo:** Todo o desenvolvimento deste repositório restringe-se à camada de apresentação e client-side services.
-- **Integração Desacoplada:** A comunicação com o backend (desenvolvido por outros membros da equipe) é feita exclusivamente via contratos HTTP/REST.
-- **Mocks Controlados:** Enquanto os endpoints do backend estiverem em desenvolvimento, o frontend utiliza dados simulados estruturados em camadas isoladas (`src/mocks/`), facilitando a substituição transparente pelos serviços reais (`src/services/`).
+1. **Dashboard do RH (`/rh`):** Indicadores de colaboradores capacitados, horas totais de treinamento, taxa de presença e gestão de turmas ativas.
+2. **Portal do Líder (`/lider`):** Catálogo de treinamentos operacionais e reserva de vagas para as frentes de trabalho.
+3. **Painel do Instrutor (`/instrutor`):** Chamada de presença com suporte a assistente visual por câmera para auxílio na conferência de operadores.
+4. **Certificados Digitais (`/certificados`):** Visualização de diplomas no padrão formal da Lins Agroindustrial e exportação para impressão/PDF.
+5. **Validação Pública (`/validar`):** Consulta aberta e instantânea por código autenticador ou leitura de QR Code.

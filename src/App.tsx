@@ -11,21 +11,37 @@ export const App: React.FC = () => {
       locale={ptBR}
       theme={{
         token: {
-          colorPrimary: '#1E40AF',
-          colorSuccess: '#10B981',
+          colorPrimary: '#0032A0',
+          colorSuccess: '#00B5AD',
           colorWarning: '#F59E0B',
-          colorError: '#EF4444',
-          colorInfo: '#0284C7',
-          borderRadius: 8,
-          fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-          colorBgLayout: '#F8FAFC',
+          colorError: '#DC2626',
+          colorInfo: '#3063D6',
+          colorText: '#3D3D3D',
+          colorTextHeading: '#184080',
+          borderRadius: 6,
+          fontFamily: "'Noto Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+          colorBgLayout: '#F8FBFD',
+          colorBorderSecondary: '#E7E7E7',
         },
         components: {
           Card: {
-            borderRadiusLG: 10,
+            borderRadiusLG: 8,
+            boxShadowTertiary: '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)',
           },
           Button: {
             borderRadius: 6,
+            controlHeight: 38,
+            fontWeight: 500,
+          },
+          Table: {
+            headerBg: '#F2F5F7',
+            headerColor: '#184080',
+            rowHoverBg: '#F8FBFD',
+          },
+          Menu: {
+            itemSelectedBg: '#EBF2FF',
+            itemSelectedColor: '#0032A0',
+            itemHoverBg: '#F2F5F7',
           },
         },
       }}

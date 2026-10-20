@@ -24,38 +24,38 @@ const { Title, Paragraph, Text } = Typography;
 const mockCertificates: Certificate[] = [
   {
     id: 'cert-1',
-    code: 'RH-2026-X8892A',
-    employeeName: 'Ana Beatriz Souza',
-    employeeDocument: '***.452.128-**',
-    trainingTitle: 'Segurança da Informação e LGPD no Dia a Dia',
-    workloadHours: 6,
-    issueDate: '2026-10-12',
-    completionDate: '2026-10-11',
-    instructorName: 'Roberto Siqueira',
+    code: 'LINS-NR13-2026-X8892',
+    employeeName: 'José Aparecido da Silva',
+    employeeDocument: 'Matrícula: MAT-14829',
+    trainingTitle: 'NR-13: Segurança Operacional em Caldeiras e Destilaria',
+    workloadHours: 16,
+    issueDate: '2026-10-18',
+    completionDate: '2026-10-17',
+    instructorName: 'Dra. Camila Toledo',
     isValid: true,
   },
   {
     id: 'cert-2',
-    code: 'RH-2026-B3419K',
-    employeeName: 'Lucas Gabriel Martins',
-    employeeDocument: '***.781.993-**',
-    trainingTitle: 'Segurança da Informação e LGPD no Dia a Dia',
-    workloadHours: 6,
-    issueDate: '2026-10-12',
-    completionDate: '2026-10-11',
-    instructorName: 'Roberto Siqueira',
+    code: 'LINS-NR31-2026-B3419',
+    employeeName: 'Anderson Rodrigo Lima',
+    employeeDocument: 'Matrícula: MAT-12903',
+    trainingTitle: 'NR-31: Segurança e Saúde no Trabalho Agroindustrial',
+    workloadHours: 20,
+    issueDate: '2026-10-15',
+    completionDate: '2026-10-14',
+    instructorName: 'Eng. Roberto Vasconcelos',
     isValid: true,
   },
   {
     id: 'cert-3',
-    code: 'RH-2026-M7721P',
-    employeeName: 'Juliana Costa e Silva',
-    employeeDocument: '***.320.441-**',
-    trainingTitle: 'Gestão de Tempo e Produtividade Corporativa',
-    workloadHours: 10,
-    issueDate: '2026-09-30',
-    completionDate: '2026-09-29',
-    instructorName: 'Aline Pires',
+    code: 'LINS-BPF-2026-M7721',
+    employeeName: 'Claudio Roberto Souza',
+    employeeDocument: 'Matrícula: MAT-09823',
+    trainingTitle: 'Boas Práticas de Fabricação (BPF) no Processo de Açúcar',
+    workloadHours: 12,
+    issueDate: '2026-10-05',
+    completionDate: '2026-10-04',
+    instructorName: 'Aline Barbosa - CQ',
     isValid: true,
   },
 ];
@@ -75,13 +75,13 @@ export const Certificados: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-      <div style={{ marginBottom: 24 }}>
-        <Title level={2} style={{ margin: 0 }}>
-          Certificados Digitais
+    <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+      <div className="lins-page-header" style={{ marginBottom: 28 }}>
+        <Title level={2} className="lins-page-title" style={{ margin: 0, fontSize: 24 }}>
+          Certificados Digitais de Capacitação
         </Title>
-        <Paragraph type="secondary" style={{ margin: 0 }}>
-          Consulte, pré-visualize e exporte os certificados emitidos para os colaboradores.
+        <Paragraph type="secondary" style={{ margin: '4px 0 0', color: '#54595F', fontSize: 14 }}>
+          Histórico e emissão oficial de certificados técnicos da Universidade Corporativa Lins Agroindustrial.
         </Paragraph>
       </div>
 
@@ -89,34 +89,38 @@ export const Certificados: React.FC = () => {
         {mockCertificates.map((cert) => (
           <Col xs={24} md={8} key={cert.id}>
             <Card
-              className="card-hover-shadow"
+              className="lins-card"
+              bordered={false}
               title={
                 <Space>
-                  <SafetyCertificateOutlined style={{ color: '#10B981', fontSize: 18 }} />
-                  <Text strong>{cert.employeeName}</Text>
+                  <SafetyCertificateOutlined style={{ color: '#00B5AD', fontSize: 18 }} />
+                  <Text strong style={{ color: '#184080', fontSize: 14 }}>{cert.employeeName}</Text>
                 </Space>
               }
-              extra={<Tag color="green">Válido</Tag>}
+              extra={<Tag color="cyan" style={{ borderRadius: 4, background: '#e6f7f6', color: '#0d9690', borderColor: '#b3e7e4' }}>Autêntico</Tag>}
               actions={[
                 <Button
                   key="preview"
                   type="link"
                   icon={<EyeOutlined />}
                   onClick={() => handlePreview(cert)}
+                  style={{ color: '#0032A0', fontWeight: 600 }}
                 >
-                  Visualizar
+                  Visualizar Diploma
                 </Button>,
               ]}
             >
-              <Paragraph strong ellipsis={{ rows: 2 }}>
+              <Paragraph strong ellipsis={{ rows: 2 }} style={{ color: '#3d3d3d', minHeight: 44 }}>
                 {cert.trainingTitle}
               </Paragraph>
-              <Text type="secondary" style={{ fontSize: 13, display: 'block' }}>
-                Código: <Text code>{cert.code}</Text>
-              </Text>
-              <Text type="secondary" style={{ fontSize: 13 }}>
-                Emitido em: {cert.issueDate} ({cert.workloadHours}h)
-              </Text>
+              <div style={{ background: '#f8fbfd', padding: '10px 12px', borderRadius: 6, border: '1px solid #f2f5f7' }}>
+                <Text type="secondary" style={{ fontSize: 12.5, display: 'block' }}>
+                  Código: <Text code style={{ color: '#0032A0', background: '#ebf2ff' }}>{cert.code}</Text>
+                </Text>
+                <Text type="secondary" style={{ fontSize: 12.5 }}>
+                  Conclusão: {cert.completionDate} • Carga: <strong>{cert.workloadHours}h</strong>
+                </Text>
+              </div>
             </Card>
           </Col>
         ))}
@@ -126,9 +130,9 @@ export const Certificados: React.FC = () => {
       <Modal
         open={isPreviewOpen}
         onCancel={() => setIsPreviewOpen(false)}
-        width={760}
+        width={800}
         footer={[
-          <Button key="back" onClick={() => setIsPreviewOpen(false)}>
+          <Button key="back" onClick={() => setIsPreviewOpen(false)} style={{ borderRadius: 6 }}>
             Fechar
           </Button>,
           <Button
@@ -136,63 +140,77 @@ export const Certificados: React.FC = () => {
             type="primary"
             icon={<PrinterOutlined />}
             onClick={handlePrint}
+            style={{ backgroundColor: '#0032A0', borderColor: '#0032A0', borderRadius: 6 }}
           >
-            Imprimir / Salvar PDF
+            Imprimir / Exportar PDF
           </Button>,
         ]}
       >
         {selectedCert && (
           <div
             style={{
-              border: '8px double #1E40AF',
-              padding: '40px 30px',
+              border: '6px double #0032A0',
+              padding: '48px 40px',
               textAlign: 'center',
-              backgroundColor: '#fff',
-              margin: '20px 0',
+              backgroundColor: '#ffffff',
+              margin: '16px 0',
               borderRadius: 4,
+              position: 'relative',
             }}
           >
-            <div style={{ marginBottom: 16 }}>
-              <SafetyCertificateOutlined style={{ fontSize: 48, color: '#1E40AF' }} />
+            {/* Logo da Lins Agroindustrial no Certificado */}
+            <div style={{ marginBottom: 20 }}>
+              <img
+                src="https://linsagro.com.br/wp-content/uploads/2022/07/cropped-Lins_Logo_Horizontal_RGB_Preferencial_20250512_Keenwork_AF.png"
+                alt="Lins Agroindustrial"
+                style={{ height: 42, objectFit: 'contain' }}
+              />
+              <div style={{ fontSize: 11, color: '#00B5AD', fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', marginTop: 6 }}>
+                Universidade Corporativa • Gestão de Pessoas
+              </div>
             </div>
 
-            <Title level={3} style={{ textTransform: 'uppercase', letterSpacing: 2, color: '#1e3a8a' }}>
-              Certificado de Conclusão
+            <Title level={3} style={{ textTransform: 'uppercase', letterSpacing: 2, color: '#0032A0', margin: '16px 0 24px' }}>
+              Certificado de Capacitação Técnica
             </Title>
 
-            <Paragraph style={{ fontSize: 16, marginTop: 24 }}>
-              Certificamos que
+            <Paragraph style={{ fontSize: 15, color: '#54595F' }}>
+              Certificamos que o colaborador
             </Paragraph>
 
-            <Title level={2} style={{ color: '#0f172a', margin: '8px 0 16px' }}>
+            <Title level={2} style={{ color: '#184080', margin: '8px 0 16px', fontWeight: 700 }}>
               {selectedCert.employeeName}
             </Title>
 
-            <Paragraph style={{ fontSize: 15, maxWidth: 540, margin: '0 auto', color: '#334155' }}>
-              concluiu com êxito o treinamento corporativo de{' '}
-              <strong>{selectedCert.trainingTitle}</strong>, com carga horária total de{' '}
-              <strong>{selectedCert.workloadHours} horas</strong>, finalizado em{' '}
-              <strong>{selectedCert.completionDate}</strong>.
+            <Paragraph style={{ fontSize: 13, color: '#64748b', marginBottom: 20 }}>
+              {selectedCert.employeeDocument} • Unidade Lins/SP
             </Paragraph>
 
-            <Divider style={{ margin: '36px 0 24px' }} />
+            <Paragraph style={{ fontSize: 15.5, maxWidth: 600, margin: '0 auto', color: '#3d3d3d', lineHeight: 1.6 }}>
+              concluiu com êxito o programa de treinamento de{' '}
+              <strong style={{ color: '#0032A0' }}>{selectedCert.trainingTitle}</strong>,
+              com carga horária total de <strong>{selectedCert.workloadHours} horas</strong>,
+              concluído em <strong>{selectedCert.completionDate}</strong>.
+            </Paragraph>
+
+            <Divider style={{ margin: '40px 0 24px', borderColor: '#e7e7e7' }} />
 
             <Row justify="space-between" align="bottom">
               <Col span={10}>
                 <div style={{ borderTop: '1px solid #94a3b8', paddingTop: 8 }}>
-                  <Text strong style={{ display: 'block' }}>{selectedCert.instructorName}</Text>
-                  <Text type="secondary" style={{ fontSize: 12 }}>Instrutor Responsável</Text>
+                  <Text strong style={{ display: 'block', color: '#184080' }}>{selectedCert.instructorName}</Text>
+                  <Text type="secondary" style={{ fontSize: 12 }}>Instrutor Técnico Responsável</Text>
                 </div>
               </Col>
 
               <Col span={10}>
                 <div style={{ textAlign: 'right' }}>
                   <Space>
-                    <CheckCircleFilled style={{ color: '#10b981' }} />
-                    <Text style={{ fontSize: 12 }}>Certificado Autêntico</Text>
+                    <CheckCircleFilled style={{ color: '#00B5AD', fontSize: 16 }} />
+                    <Text strong style={{ fontSize: 12.5, color: '#0D9690' }}>Certificado Autenticado</Text>
                   </Space>
-                  <div style={{ fontSize: 11, color: '#64748b', marginTop: 4 }}>
-                    Validador: {selectedCert.code}
+                  <div style={{ fontSize: 11, color: '#54595F', marginTop: 4 }}>
+                    Código de Validação: <code>{selectedCert.code}</code>
                   </div>
                 </div>
               </Col>

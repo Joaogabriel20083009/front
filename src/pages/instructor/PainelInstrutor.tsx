@@ -17,7 +17,6 @@ import {
   CheckCircleOutlined,
   CloseCircleOutlined,
   WarningOutlined,
-  UserOutlined,
   EyeOutlined,
 } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
@@ -28,17 +27,18 @@ const { Title, Paragraph, Text } = Typography;
 interface StudentAttendee {
   id: string;
   name: string;
-  document: string;
+  badgeId: string;
   department: string;
+  role: string;
   status: AttendanceStatus;
 }
 
 const initialAttendees: StudentAttendee[] = [
-  { id: '1', name: 'Ana Beatriz Souza', document: '***.452.128-**', department: 'Operações', status: 'presente' },
-  { id: '2', name: 'Lucas Gabriel Martins', document: '***.781.993-**', department: 'Operações', status: 'presente' },
-  { id: '3', name: 'Juliana Costa e Silva', document: '***.320.441-**', department: 'Operações', status: 'ausente' },
-  { id: '4', name: 'Carlos Santos Nogueira', document: '***.908.215-**', department: 'TI & Inovação', status: 'ausente' },
-  { id: '5', name: 'Patrícia Mendes', document: '***.612.870-**', department: 'Financeiro', status: 'justificado' },
+  { id: '1', name: 'José Aparecido da Silva', badgeId: 'MAT-14829', department: 'Colheita Mecanizada', role: 'Operador de Colhedora', status: 'presente' },
+  { id: '2', name: 'Anderson Rodrigo Lima', badgeId: 'MAT-12903', department: 'Oficina Mecânica Agrícola', role: 'Mecânico Senior', status: 'presente' },
+  { id: '3', name: 'Marcos Vinicius Santos', badgeId: 'MAT-16781', department: 'Tratos Culturais', role: 'Líder de Turma', status: 'ausente' },
+  { id: '4', name: 'Valdir Ferreira', badgeId: 'MAT-10542', department: 'Logística Canavieira', role: 'Motorista Canavieiro', status: 'ausente' },
+  { id: '5', name: 'Claudio Roberto Souza', badgeId: 'MAT-09823', department: 'Indústria / Caldeiras', role: 'Operador de Painel', status: 'justificado' },
 ];
 
 export const PainelInstrutor: React.FC = () => {
@@ -50,11 +50,10 @@ export const PainelInstrutor: React.FC = () => {
     setAttendees((prev) =>
       prev.map((item) => (item.id === id ? { ...item, status: newStatus } : item))
     );
-    message.success('Status de presença atualizado.');
+    message.success('Presença atualizada com sucesso.');
   };
 
   const handleSimulateFacialScan = () => {
-    // Simulação visual de detecção de participante para conferência rápida
     const absentStudent = attendees.find((a) => a.status === 'ausente');
     if (absentStudent) {
       setSimulatedMatchName(absentStudent.name);
@@ -78,39 +77,42 @@ export const PainelInstrutor: React.FC = () => {
 
   const columns: ColumnsType<StudentAttendee> = [
     {
-      title: 'Participante',
+      title: 'Colaborador / Operador',
       key: 'name',
       render: (_, record) => (
-        <Space>
-          <Avatar icon={<UserOutlined />} />
+        <Space size="middle">
+          <Avatar style={{ backgroundColor: '#eef2ff', color: '#0032a0', fontWeight: 600 }}>
+            {record.name.charAt(0)}
+          </Avatar>
           <div>
-            <Text strong>{record.name}</Text>
-            <div style={{ fontSize: 12, color: '#64748b' }}>Doc: {record.document}</div>
+            <Text strong style={{ color: '#184080', fontSize: 14 }}>{record.name}</Text>
+            <div style={{ fontSize: 12, color: '#54595F' }}>{record.role} • Matrícula: {record.badgeId}</div>
           </div>
         </Space>
       ),
     },
     {
-      title: 'Departamento',
+      title: 'Frente / Setor',
       dataIndex: 'department',
       key: 'department',
+      render: (dep) => <Tag style={{ borderRadius: 4, background: '#f8fbfd', border: '1px solid #e7e7e7', color: '#3d3d3d' }}>{dep}</Tag>,
     },
     {
-      title: 'Status de Presença',
+      title: 'Situação na Chamada',
       dataIndex: 'status',
       key: 'status',
       render: (status: AttendanceStatus) => {
-        if (status === 'presente') return <Tag color="success" icon={<CheckCircleOutlined />}>Presente</Tag>;
-        if (status === 'justificado') return <Tag color="warning" icon={<WarningOutlined />}>Justificado</Tag>;
-        return <Tag color="error" icon={<CloseCircleOutlined />}>Ausente</Tag>;
+        if (status === 'presente') return <Tag color="success" icon={<CheckCircleOutlined />} style={{ borderRadius: 4, fontWeight: 600 }}>Presente</Tag>;
+        if (status === 'justificado') return <Tag color="warning" icon={<WarningOutlined />} style={{ borderRadius: 4, fontWeight: 600 }}>Justificado</Tag>;
+        return <Tag color="error" icon={<CloseCircleOutlined />} style={{ borderRadius: 4, fontWeight: 600 }}>Ausente</Tag>;
       },
     },
     {
-      title: 'Ações Rápidas',
+      title: 'Controle de Frequência',
       key: 'actions',
       render: (_, record) => (
         <Radio.Group
-          size="small"
+          size="middle"
           value={record.status}
           onChange={(e) => updateStatus(record.id, e.target.value)}
         >
@@ -123,31 +125,38 @@ export const PainelInstrutor: React.FC = () => {
   ];
 
   return (
-    <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+    <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+      <div className="lins-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 }}>
         <div>
-          <Title level={2} style={{ margin: 0 }}>
-            Painel do Instrutor
+          <Title level={2} className="lins-page-title" style={{ margin: 0, fontSize: 24 }}>
+            Painel do Instrutor & Controle de Turma
           </Title>
-          <Paragraph type="secondary" style={{ margin: 0 }}>
-            Turma: Liderança Ágil e Gestão de Conflitos — Lista de Convocados e Chamada
+          <Paragraph type="secondary" style={{ margin: '4px 0 0', color: '#54595F', fontSize: 14 }}>
+            Turma: <strong>NR-31: Segurança e Saúde no Trabalho Agroindustrial</strong> • Sala 01 CT Lins
           </Paragraph>
         </div>
 
         <Button
           type="primary"
           icon={<CameraOutlined />}
-          size="large"
+          size="middle"
           onClick={() => {
             setSimulatedMatchName(null);
             setIsCameraModalOpen(true);
           }}
+          style={{
+            backgroundColor: '#0032A0',
+            borderColor: '#0032A0',
+            borderRadius: 6,
+            height: 40,
+            padding: '0 20px',
+          }}
         >
-          Chamada com Captura Facial
+          Chamada com Assistência por Câmera
         </Button>
       </div>
 
-      <Card bordered={false} className="card-hover-shadow">
+      <Card bordered={false} className="lins-card">
         <div className="table-responsive-wrapper">
           <Table
             rowKey="id"
@@ -160,30 +169,38 @@ export const PainelInstrutor: React.FC = () => {
 
       {/* Modal de Chamada com Câmera */}
       <Modal
-        title="Assistente de Chamada por Captura Facial"
+        title={
+          <div>
+            <div style={{ fontSize: 12, color: '#00B5AD', fontWeight: 600, textTransform: 'uppercase' }}>
+              Universidade Corporativa Lins Agro
+            </div>
+            <div style={{ fontSize: 16, color: '#0032A0', fontWeight: 700 }}>
+              Assistente de Conferência Visual de Presença
+            </div>
+          </div>
+        }
         open={isCameraModalOpen}
         onCancel={() => setIsCameraModalOpen(false)}
         footer={null}
         width={560}
       >
         <Alert
-          message="Aviso de Assistência Visual"
-          description="Este recurso é uma ferramenta de conferência visual e agilidade para o instrutor. Não constitui biometria legal ou autenticação pericial."
+          message="Assistência Visual para o Instrutor"
+          description="Este recurso atua exclusivamente como auxílio visual para conferência rápida de presença dos operadores em sala de treinamento. Não substitui assinatura formal nem constitui biometria pericial."
           type="info"
           showIcon
-          style={{ marginBottom: 16 }}
+          style={{ marginBottom: 20, borderRadius: 6, borderColor: '#d0e1fd', background: '#f8fbfd' }}
         />
 
         <div
           style={{
-            height: 260,
-            background: '#0f172a',
+            height: 250,
+            background: '#184080',
             borderRadius: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#94a3b8',
             position: 'relative',
             overflow: 'hidden',
           }}
@@ -191,40 +208,42 @@ export const PainelInstrutor: React.FC = () => {
           <div
             style={{
               width: 140,
-              height: 180,
-              border: '2px dashed #38bdf8',
+              height: 170,
+              border: '2px dashed #00B5AD',
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              boxShadow: '0 0 20px rgba(0, 181, 173, 0.3)',
             }}
           >
-            <EyeOutlined style={{ fontSize: 32, color: '#38bdf8' }} />
+            <EyeOutlined style={{ fontSize: 32, color: '#00B5AD' }} />
           </div>
-          <Text style={{ color: '#cbd5e1', marginTop: 12 }}>
-            Posicione o rosto do participante na moldura
+          <Text style={{ color: '#ffffff', marginTop: 12, fontSize: 13, fontWeight: 500 }}>
+            Posicione o rosto do colaborador na área indicada
           </Text>
         </div>
 
         {simulatedMatchName && (
-          <div style={{ marginTop: 16, textAlign: 'center' }}>
-            <Tag color="green" style={{ padding: '6px 12px', fontSize: 14 }}>
-              Sugestão de Participante: <strong>{simulatedMatchName}</strong>
+          <div style={{ marginTop: 18, textAlign: 'center' }}>
+            <Tag color="cyan" style={{ padding: '6px 16px', fontSize: 13, borderRadius: 4, background: '#e6f7f6', color: '#0d9690', borderColor: '#b3e7e4' }}>
+              Operador Reconhecido: <strong>{simulatedMatchName}</strong>
             </Tag>
           </div>
         )}
 
-        <div style={{ marginTop: 20, textAlign: 'center' }}>
-          <Space>
-            <Button onClick={handleSimulateFacialScan}>
-              Simular Detecção Facial
+        <div style={{ marginTop: 22, textAlign: 'center' }}>
+          <Space size="middle">
+            <Button onClick={handleSimulateFacialScan} style={{ borderRadius: 6 }}>
+              Identificar Participante
             </Button>
             <Button
               type="primary"
               disabled={!simulatedMatchName}
               onClick={handleConfirmFacialAttendance}
+              style={{ backgroundColor: '#0032A0', borderColor: '#0032A0', borderRadius: 6 }}
             >
-              Confirmar Presença
+              Confirmar Presença na Turma
             </Button>
           </Space>
         </div>

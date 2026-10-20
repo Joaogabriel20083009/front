@@ -1,65 +1,53 @@
-# Design System: Gestão Inteligente de Treinamentos Internos de RH
+# Design System: Lins Agroindustrial — Gestão de Treinamentos RH
 
-Este documento define os padrões visuais, tokens de estilo e convenções de interface utilizados na plataforma de Frontend com React e Ant Design (antd).
+Este documento define os padrões visuais, tokens e convenções de interface baseados na identidade corporativa clean da **Lins Agroindustrial** ([linsagro.com.br](https://linsagro.com.br/)).
 
 ---
 
 ## 1. Princípios de Design
-- **Clareza e Densidade Corporativa:** Telas limpas, com foco em legibilidade de dados, tabelas escaneáveis e cartões de métricas bem espaçados.
-- **Consistência Ant Design:** Uso padronizado dos componentes fundamentais do Ant Design via `ConfigProvider` para manter coerência visual em todos os módulos.
-- **Feedback Imediato:** Toda ação do usuário deve conter estados claros de carregamento (`Spin`, `Skeleton`), sucesso (`message`, `Alert`), erro e estado vazio (`Empty`).
-- **Acessibilidade e Contraste:** Relação de contraste adequada para leitura prolongada em ambientes corporativos.
+- **Clean e Espaçoso:** Layout arejado com fundo neutro suave (`#F8FBFD`), cartões brancos com sombras sutis e alta legibilidade.
+- **Identidade da Agroindústria Moderna:** O azul nobre institucional (`#0032A0`) reflete solidez corporativa, complementado pelos tons de ciano/teal (`#00B5AD` e `#0D9690`) associados à sustentabilidade, bioenergia e etanol.
+- **Tipografia Noto Sans:** Tipografia geométrica, moderna e altamente legível para dados corporativos, tabelas e diplomas técnicos.
+- **Consistência Ant Design:** Uso customizado de Design Tokens do Ant Design via `ConfigProvider` para manter coerência visual em todos os módulos.
 
 ---
 
-## 2. Paleta de Cores e Tokens
+## 2. Paleta de Cores e Tokens Oficiais
 
-### Cores Principais
-| Token | Cor Hex | Uso |
+### Cores Principais da Marca
+| Token | Cor Hex | Significado / Aplicação |
 | :--- | :--- | :--- |
-| `colorPrimary` | `#1E40AF` / `#2563EB` | Ações primárias, links ativos, botões de destaque e navegação |
-| `colorSuccess` | `#10B981` / `#52C41A` | Presenças confirmadas, treinamentos concluídos e certificados válidos |
-| `colorWarning` | `#F59E0B` / `#FAAD14` | Vagas limitadas, treinamentos pendentes de confirmação ou alertas |
-| `colorError` | `#EF4444` / `#FF4D4F` | Faltas, certificados inválidos e erros de validação |
-| `colorInfo` | `#0284C7` / `#1677FF` | Avisos informativos e comunicados do RH |
+| `colorPrimary` | `#0032A0` | Azul Real Lins Agroindustrial (Ações primárias, títulos, cabeçalho) |
+| `colorAccent` | `#00B5AD` | Ciano Sustentabilidade & Bioenergia (Badges de destaque, selos de aprovação) |
+| `colorSuccess` | `#0D9690` | Verde-água profundo (Presenças confirmadas, certificados válidos) |
+| `colorWarning` | `#F59E0B` | Âmbar corporativo (Vagas limitadas, justificativas de ausência) |
+| `colorError` | `#DC2626` | Vermelho técnico (Faltas e certificados revogados/não encontrados) |
+| `colorInfo` | `#3063D6` | Azul suave (Avisos operacionais e NRs) |
 
 ### Superfícies e Neutros
-- **Fundo da Aplicação (`colorBgLayout`):** `#F8FAFC` (Slate 50)
-- **Fundo de Cards e Contêineres (`colorBgContainer`):** `#FFFFFF`
-- **Bordas sutis (`colorBorderSecondary`):** `#E2E8F0`
-- **Texto Principal (`colorText`):** `#0F172A` (Slate 900)
-- **Texto Secundário (`colorTextSecondary`):** `#64748B` (Slate 500)
+- **Fundo da Aplicação (`colorBgLayout`):** `#F8FBFD` (Cinza-azulado ultra suave e arejado)
+- **Fundo de Cards e Contêineres:** `#FFFFFF` puro
+- **Bordas sutis:** `#E7E7E7` e `#F2F5F7`
+- **Texto Principal (`colorText`):** `#3D3D3D` (Cinza carvão para leitura confortável)
+- **Texto Secundário (`colorTextSecondary`):** `#54595F`
+- **Cabeçalhos de Tabela e Menus:** `#184080` e `#F2F5F7`
 
 ---
 
 ## 3. Tipografia
-- **Família Tipográfica:** `'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif`
+- **Família Tipográfica Primária:** `'Noto Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif`
 - **Escala de Tamanhos:**
-  - `Display / Títulos Maiores (H1)`: 28px - 32px (Semi-bold / Bold)
-  - `Subtítulos e Seções (H2, H3)`: 20px - 24px (Semi-bold)
-  - `Títulos de Cards e Modais (H4)`: 16px - 18px (Medium / Semi-bold)
-  - `Corpo de Texto (Body)`: 14px (Regular)
-  - `Legendas e Metadados (Caption)`: 12px (Regular)
+  - `Títulos de Seção (H2)`: 24px (Bold, cor `#0032A0`)
+  - `Subtítulos e Categorias`: 13px - 14px (Medium, cor `#54595F` ou `#00B5AD`)
+  - `Texto Principal (Body)`: 14px (Regular, `#3D3D3D`)
+  - `Legendas e Metadados`: 12px (Regular)
 
 ---
 
-## 4. Estrutura de Layout e Componentes Padrão
+## 4. Componentes e Padrões de Interface
 
 ### Shell da Aplicação
-- **Header Superior:** Identidade visual da plataforma, seletor de perfil/visão ativa e ações rápidas.
-- **Sider Navegação Lateral:** Menus colapsáveis com ícones semânticos `@ant-design/icons` para cada um dos 5 módulos.
-- **Área de Conteúdo (`Content`):** Padding padrão de `24px`, com `Card` estruturados e cantos arredondados (`borderRadius: 8px`).
-
-### Componentes Chave por Módulo
-1. **Cards de KPI:** `Statistic` do antd estilizados com prefixos/sufixos de ícones e percentuais de variação.
-2. **Listagens:** `Table` responsiva com paginação, filtros e tags coloridas (`Tag`) para os status dos treinamentos.
-3. **Formulários:** `Form` com validação de campos obrigatórios, labels claros e seletores dinâmicos.
-4. **Chamada e Câmera:** Contêiner com moldura de câmera (visual viewport) com overlay de enquadramento facial simulado e botões de ação rápida (Confirmar / Pular).
-5. **Certificados Digitais:** Moldura vetorial com layout formal, selo visual e dados de autenticação em destaque.
-
----
-
-## 5. Estados e Tratamento de Exceções
-- **Carregamento:** Indicadores `Skeleton` para tabelas e cards; spinners para ações pontuais.
-- **Ausência de Dados:** Componente `Empty` customizado com orientações para o usuário criar ou filtrar registros.
-- **Mensagens Rápidas:** Feedback via `message.success()` ou `message.error()` para operações de salvar/reservar.
+- **Header:** Logotipo oficial da Lins Agroindustrial, subtítulo "Universidade Corporativa", badge da Safra 2026/27 e tag da unidade de Lins/SP.
+- **Sider:** Barra lateral branca limpa com borda `#E7E7E7`, itens com cantos arredondados (6px) e seleção em azul suave (`#EBF2FF`).
+- **Cards:** Bordas limpas (`#E7E7E7`), raio de borda de 8px e elevação suave ao passar o mouse.
+- **Certificados:** Moldura formal em azul `#0032A0`, selo de autenticidade `#00B5AD` e logotipo em alta resolução.

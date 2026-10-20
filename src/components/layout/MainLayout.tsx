@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import { Layout, Menu, Typography, Tag, Space } from 'antd';
+import { Layout, Menu, Typography, Tag, Space, Badge } from 'antd';
 import {
   DashboardOutlined,
   TeamOutlined,
   VideoCameraOutlined,
   SafetyCertificateOutlined,
   QrcodeOutlined,
-  BankOutlined,
-  UserOutlined,
+  EnvironmentOutlined,
 } from '@ant-design/icons';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 
 const { Header, Sider, Content, Footer } = Layout;
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 export const MainLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -22,27 +21,27 @@ export const MainLayout: React.FC = () => {
   const menuItems = [
     {
       key: '/rh',
-      icon: <DashboardOutlined />,
+      icon: <DashboardOutlined style={{ fontSize: 16 }} />,
       label: 'Dashboard do RH',
     },
     {
       key: '/lider',
-      icon: <TeamOutlined />,
+      icon: <TeamOutlined style={{ fontSize: 16 }} />,
       label: 'Portal do Líder',
     },
     {
       key: '/instrutor',
-      icon: <VideoCameraOutlined />,
+      icon: <VideoCameraOutlined style={{ fontSize: 16 }} />,
       label: 'Painel do Instrutor',
     },
     {
       key: '/certificados',
-      icon: <SafetyCertificateOutlined />,
-      label: 'Certificados',
+      icon: <SafetyCertificateOutlined style={{ fontSize: 16 }} />,
+      label: 'Certificados Digitais',
     },
     {
       key: '/validar',
-      icon: <QrcodeOutlined />,
+      icon: <QrcodeOutlined style={{ fontSize: 16 }} />,
       label: 'Validação Pública',
     },
   ];
@@ -54,33 +53,62 @@ export const MainLayout: React.FC = () => {
 
   return (
     <Layout className="app-layout">
+      {/* Header Corporativo Lins Agroindustrial */}
       <Header className="app-header">
-        <div className="app-logo">
-          <BankOutlined style={{ fontSize: 24, color: '#1E40AF' }} />
-          <Title level={4} style={{ margin: 0, color: '#1E40AF' }}>
-            RH Treinamentos
-          </Title>
+        <div className="app-brand" style={{ cursor: 'pointer' }} onClick={() => navigate('/rh')}>
+          <img
+            src="https://linsagro.com.br/wp-content/uploads/2022/07/cropped-Lins_Logo_Horizontal_RGB_Preferencial_20250512_Keenwork_AF.png"
+            alt="Lins Agroindustrial"
+            className="app-brand-logo"
+            onError={(e) => {
+              // Fallback se a imagem externa não carregar
+              (e.currentTarget as HTMLElement).style.display = 'none';
+            }}
+          />
+          <div className="app-brand-divider" />
+          <div className="app-brand-text">
+            <span className="app-brand-title">Gestão de Treinamentos</span>
+            <span className="app-brand-subtitle">Universidade Corporativa RH</span>
+          </div>
         </div>
 
-        <Space orientation="horizontal" size="middle">
-          <Tag color="blue" icon={<UserOutlined />}>
-            Ambiente de Demonstração (Hackathon)
+        <Space size="large">
+          <Badge status="processing" color="#00B5AD" text={
+            <span style={{ fontSize: 13, color: '#54595F' }}>
+              Safra 2026/27
+            </span>
+          } />
+
+          <Tag
+            color="default"
+            icon={<EnvironmentOutlined style={{ color: '#0032A0' }} />}
+            style={{
+              padding: '4px 10px',
+              borderRadius: 4,
+              borderColor: '#e7e7e7',
+              backgroundColor: '#f8fbfd',
+              color: '#184080',
+              fontWeight: 500,
+            }}
+          >
+            Unidade Agroindustrial Lins/SP
           </Tag>
         </Space>
       </Header>
 
       <Layout>
+        {/* Menu Lateral Clean */}
         <Sider
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
-          width={240}
+          width={250}
           className="app-sider"
           theme="light"
         >
-          <div style={{ padding: '16px 20px', borderBottom: '1px solid #f0f0f0' }}>
-            <Text type="secondary" style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: 1 }}>
-              {collapsed ? 'RH' : 'Navegação'}
+          <div style={{ padding: '16px 20px', borderBottom: '1px solid #f2f5f7' }}>
+            <Text type="secondary" style={{ fontSize: 11, fontWeight: 700, letterSpacing: 0.8, color: '#8c9ba5' }}>
+              {collapsed ? 'MENU' : 'MÓDULOS DE CAPACITAÇÃO'}
             </Text>
           </div>
           <Menu
@@ -92,21 +120,15 @@ export const MainLayout: React.FC = () => {
           />
         </Sider>
 
-        <Layout style={{ padding: '0' }}>
-          <Content
-            className="app-content"
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-              background: '#f8fafc',
-            }}
-          >
+        <Layout style={{ background: '#f8fbfd' }}>
+          <Content className="app-content">
             <Outlet />
           </Content>
 
           <Footer className="app-footer">
-            Gestão Inteligente de Treinamentos Internos de RH © 2026 — Plataforma Frontend
+            <Text type="secondary" style={{ fontSize: 12.5 }}>
+              <strong>Lins Agroindustrial S/A</strong> • Diretoria de Recursos Humanos e Relações Trabalhistas © 2026
+            </Text>
           </Footer>
         </Layout>
       </Layout>
