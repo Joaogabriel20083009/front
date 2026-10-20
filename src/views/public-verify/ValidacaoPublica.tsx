@@ -69,7 +69,7 @@ export const ValidacaoPublica: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: 640, margin: '20px auto 0' }}>
+    <div style={{ maxWidth: 640, margin: '20px auto 0', padding: '0 8px' }}>
       <div style={{ textAlign: 'center', marginBottom: 20 }}>
         <img
           src="https://linsagro.com.br/wp-content/uploads/2022/07/cropped-Lins_Logo_Horizontal_RGB_Preferencial_20250512_Keenwork_AF.png"
@@ -84,7 +84,7 @@ export const ValidacaoPublica: React.FC = () => {
         </Text>
       </div>
 
-      <Card bordered={false} className="lins-card" styles={{ body: { padding: '16px' } }} style={{ marginBottom: 16 }}>
+      <Card variant="borderless" className="lins-card" styles={{ body: { padding: '16px' } }} style={{ marginBottom: 16 }}>
         <Space direction="vertical" size="small" style={{ width: '100%' }}>
           <Text strong style={{ color: '#334155', fontSize: 12.5 }}>
             Código autenticador:
@@ -113,7 +113,7 @@ export const ValidacaoPublica: React.FC = () => {
       </Card>
 
       {searched && (
-        <Card bordered={false} className="lins-card" styles={{ body: { padding: '16px' } }}>
+        <Card variant="borderless" className="lins-card" styles={{ body: { padding: '16px' } }}>
           {verifiedCert ? (
             <Result
               status="success"

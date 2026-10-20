@@ -150,6 +150,7 @@ export const PortalLider: React.FC = () => {
         okText={`Confirmar (${selectedMemberIds.length})`}
         cancelText="Voltar"
         width={440}
+        style={{ maxWidth: '95vw' }}
         okButtonProps={{
           style: { backgroundColor: '#0032A0', borderColor: '#0032A0', borderRadius: 4 },
         }}

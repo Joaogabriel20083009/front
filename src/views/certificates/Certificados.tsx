@@ -135,6 +135,7 @@ export const Certificados: React.FC = () => {
         open={isPreviewOpen}
         onCancel={() => setIsPreviewOpen(false)}
         width={680}
+        style={{ maxWidth: '95vw' }}
         footer={[
           <Button key="back" size="small" onClick={() => setIsPreviewOpen(false)}>
             Fechar
@@ -153,9 +154,10 @@ export const Certificados: React.FC = () => {
       >
         {selectedCert && (
           <div
+            className="cert-diploma-box"
             style={{
               border: '4px double #0032A0',
-              padding: '32px 28px',
+              padding: '24px 20px',
               textAlign: 'center',
               backgroundColor: '#ffffff',
               margin: '10px 0',
@@ -194,15 +196,15 @@ export const Certificados: React.FC = () => {
 
             <Divider style={{ margin: '24px 0 16px', borderColor: '#e2e8f0' }} />
 
-            <Row justify="space-between" align="bottom">
-              <Col span={10}>
-                <div style={{ borderTop: '1px solid #cbd5e1', paddingTop: 6 }}>
+            <Row justify="space-between" align="bottom" gutter={[12, 12]}>
+              <Col xs={24} sm={10}>
+                <div style={{ borderTop: '1px solid #cbd5e1', paddingTop: 6, textAlign: 'left' }}>
                   <Text strong style={{ display: 'block', color: '#0f172a', fontSize: 12 }}>{selectedCert.instructorName}</Text>
                   <Text type="secondary" style={{ fontSize: 11 }}>Instrutor Técnico</Text>
                 </div>
               </Col>
 
-              <Col span={10}>
+              <Col xs={24} sm={10}>
                 <div style={{ textAlign: 'right' }}>
                   <Space size="small">
                     <CheckCircleFilled style={{ color: '#00B5AD', fontSize: 14 }} />

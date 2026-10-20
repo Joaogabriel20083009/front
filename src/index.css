@@ -153,11 +153,87 @@ html, body {
   letter-spacing: -0.2px;
 }
 
-/* Tabela e Utilitários */
+/* Tabela e Utilitários Responsivos */
 .table-responsive-wrapper {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ant-table-wrapper .ant-table {
   font-size: 12.5px;
+}
+
+/* Botão de Menu Mobile */
+.mobile-menu-btn {
+  display: none !important;
+}
+
+/* Responsividade: Tablets e Telas Médias (< 992px) */
+@media (max-width: 991px) {
+  .mobile-menu-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .app-header {
+    padding: 0 16px;
+    height: 52px;
+  }
+
+  .app-content {
+    padding: 16px 18px;
+  }
+}
+
+/* Responsividade: Smartphones (< 576px) */
+@media (max-width: 576px) {
+  .app-header {
+    padding: 0 10px;
+    height: 48px;
+  }
+
+  .app-brand {
+    gap: 8px;
+  }
+
+  .app-brand-logo {
+    height: 22px;
+  }
+
+  .app-brand-divider {
+    display: none;
+  }
+
+  .app-brand-subtitle {
+    display: none;
+  }
+
+  .app-brand-title {
+    font-size: 13px;
+  }
+
+  .header-meta-tags {
+    display: none !important;
+  }
+
+  .app-content {
+    padding: 12px 10px;
+  }
+
+  .lins-page-header {
+    margin-bottom: 12px;
+  }
+
+  .cert-diploma-box {
+    padding: 14px 8px !important;
+  }
+
+  .cert-diploma-box h4 {
+    font-size: 14px !important;
+  }
+
+  .cert-diploma-box h3 {
+    font-size: 16px !important;
+  }
 }

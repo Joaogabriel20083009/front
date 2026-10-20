@@ -176,8 +176,8 @@ export const DashboardRH: React.FC = () => {
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-      {/* Cabeçalho Limpo */}
-      <div className="lins-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+      {/* Cabeçalho Limpo e Responsivo */}
+      <div className="lins-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <Title level={4} style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>
             Painel Geral do RH
@@ -206,7 +206,7 @@ export const DashboardRH: React.FC = () => {
         <>
           {/* Cards de Indicadores Compactos */}
           <Row gutter={[12, 12]} style={{ marginBottom: 16 }}>
-            <Col xs={12} sm={6}>
+            <Col xs={12} sm={12} md={6}>
               <Card className="lins-card" styles={{ body: { padding: '12px 14px' } }}>
                 <Statistic
                   title={<span style={{ color: '#64748b', fontSize: 11.5, textTransform: 'uppercase', letterSpacing: 0.5 }}>Treinamentos Ativos</span>}
@@ -218,7 +218,7 @@ export const DashboardRH: React.FC = () => {
               </Card>
             </Col>
 
-            <Col xs={12} sm={6}>
+            <Col xs={12} sm={12} md={6}>
               <Card className="lins-card" styles={{ body: { padding: '12px 14px' } }}>
                 <Statistic
                   title={<span style={{ color: '#64748b', fontSize: 11.5, textTransform: 'uppercase', letterSpacing: 0.5 }}>Capacitados</span>}
@@ -229,7 +229,7 @@ export const DashboardRH: React.FC = () => {
               </Card>
             </Col>
 
-            <Col xs={12} sm={6}>
+            <Col xs={12} sm={12} md={6}>
               <Card className="lins-card" styles={{ body: { padding: '12px 14px' } }}>
                 <Statistic
                   title={<span style={{ color: '#64748b', fontSize: 11.5, textTransform: 'uppercase', letterSpacing: 0.5 }}>Presença Média</span>}
@@ -242,7 +242,7 @@ export const DashboardRH: React.FC = () => {
               </Card>
             </Col>
 
-            <Col xs={12} sm={6}>
+            <Col xs={12} sm={12} md={6}>
               <Card className="lins-card" styles={{ body: { padding: '12px 14px' } }}>
                 <Statistic
                   title={<span style={{ color: '#64748b', fontSize: 11.5, textTransform: 'uppercase', letterSpacing: 0.5 }}>Horas Realizadas</span>}
@@ -255,7 +255,7 @@ export const DashboardRH: React.FC = () => {
             </Col>
           </Row>
 
-          {/* Tabela de Treinamentos Compacta */}
+          {/* Tabela de Treinamentos Compacta com Rolagem Horizontal Suave */}
           <Card
             styles={{
               header: { minHeight: 40, padding: '0 14px', borderBottom: '1px solid #e2e8f0' },
@@ -271,6 +271,7 @@ export const DashboardRH: React.FC = () => {
                 dataSource={trainings}
                 pagination={{ pageSize: 6, size: 'small' }}
                 size="small"
+                scroll={{ x: 680 }}
               />
             </div>
           </Card>
@@ -285,6 +286,7 @@ export const DashboardRH: React.FC = () => {
         footer={null}
         destroyOnClose
         width={500}
+        style={{ maxWidth: '95vw' }}
       >
         <Form
           form={form}

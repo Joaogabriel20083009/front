@@ -128,7 +128,7 @@ export const PainelInstrutor: React.FC = () => {
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-      <div className="lins-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+      <div className="lins-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <Title level={4} style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>
             Painel do Instrutor
@@ -167,6 +167,7 @@ export const PainelInstrutor: React.FC = () => {
             dataSource={attendees}
             pagination={false}
             size="small"
+            scroll={{ x: 620 }}
           />
         </div>
       </Card>
@@ -177,6 +178,7 @@ export const PainelInstrutor: React.FC = () => {
         onCancel={() => setIsCameraModalOpen(false)}
         footer={null}
         width={460}
+        style={{ maxWidth: '95vw' }}
       >
         <Alert
           message="Assistência Visual para o Instrutor"
