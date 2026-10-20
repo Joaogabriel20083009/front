@@ -15,7 +15,7 @@ import {
   QrcodeOutlined,
   CheckCircleOutlined,
 } from '@ant-design/icons';
-import type { Certificate } from '../../types/certificate';
+import type { Certificate } from '../../lib/types/certificate';
 
 const { Title, Paragraph, Text } = Typography;
 const { Search } = Input;

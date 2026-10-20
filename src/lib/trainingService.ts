@@ -1,15 +1,10 @@
 import { apiClient, USE_MOCKS } from './api';
-import type { Training } from '../types/training';
-import { mockTrainings, mockRHIndicators, type RHIndicators } from '../mocks/trainingMock';
+import type { Training } from './types/training';
+import { mockTrainings, mockRHIndicators, type RHIndicators } from './mocks/trainingMock';
 
-/**
- * Serviço client-side para Treinamentos.
- * Permite desenvolvimento visual com mocks enquanto o backend está sendo preparado.
- */
 export const trainingService = {
   async getIndicators(): Promise<RHIndicators> {
     if (USE_MOCKS) {
-      // Simula latência de rede
       await new Promise((resolve) => setTimeout(resolve, 300));
       return mockRHIndicators;
     }

@@ -20,7 +20,7 @@ import {
   EyeOutlined,
 } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
-import type { AttendanceStatus } from '../../types/attendance';
+import type { AttendanceStatus } from '../../lib/types/attendance';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -167,7 +167,6 @@ export const PainelInstrutor: React.FC = () => {
         </div>
       </Card>
 
-      {/* Modal de Chamada com Câmera */}
       <Modal
         title={
           <div>

@@ -2,8 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { ConfigProvider, App as AntdApp } from 'antd';
 import ptBR from 'antd/locale/pt_BR';
-import { AppRoutes } from './routes';
-import './App.css';
+import { AppRoutes } from './views/routes';
 
 export const App: React.FC = () => {
   return (

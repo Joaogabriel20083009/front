@@ -24,5 +24,5 @@ export interface CameraAuxiliaryMatch {
   detected: boolean;
   suggestedEmployeeId?: string;
   suggestedName?: string;
-  note: string; // Ex: "Conferência visual facilitada (não biométrica)"
+  note: string;
 }

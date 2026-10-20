@@ -20,8 +20,8 @@ import {
   EnvironmentOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { mockTrainings } from '../../mocks/trainingMock';
-import type { Training } from '../../types/training';
+import { mockTrainings } from '../../lib/mocks/trainingMock';
+import type { Training } from '../../lib/types/training';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -163,7 +163,6 @@ export const PortalLider: React.FC = () => {
         })}
       </Row>
 
-      {/* Modal de Reserva de Vagas */}
       <Modal
         title={
           <div>
@@ -199,7 +198,6 @@ export const PortalLider: React.FC = () => {
                 marginBottom: 4,
                 transition: 'background 0.2s',
               }}
-              className="hover:bg-slate-50"
               onClick={() => toggleMemberSelection(member.id)}
             >
               <List.Item.Meta

@@ -24,34 +24,28 @@ graph TD
 ```
 src/
 ├── assets/             # Recursos estáticos (logos, ícones customizados, imagens)
-├── components/         # Componentes compartilhados e reutilizáveis
-│   ├── layout/         # MainLayout, AppHeader, AppSider, AppFooter
-│   ├── common/         # PageHeader, StatusBadge, EmptyState, LoadingCard
-│   └── camera/         # CameraCaptureModal (interface de captura facial client-side)
-├── pages/              # Telas da aplicação (módulos funcionais)
-│   ├── rh/             # Dashboard do RH (indicadores, listagem, cadastro)
-│   ├── leader/         # Portal do Líder (catálogo e alocação de equipe)
-│   ├── instructor/     # Painel do Instrutor (chamada e captura)
+├── components/         # Componentes compartilhados e reutilizáveis (layout)
+│   └── layout/         # MainLayout (Header, Sider, Footer)
+├── lib/                # Serviços, clientes de API, contratos tipados e mocks
+│   ├── api.ts          # Cliente HTTP client-side
+│   ├── trainingService.ts # Serviços de treinamento
+│   ├── mocks/          # Dados simulados tipados
+│   │   └── trainingMock.ts
+│   └── types/          # Definições de tipos TypeScript
+│       ├── training.ts
+│       ├── attendance.ts
+│       └── certificate.ts
+├── utils/              # Funções utilitárias e formatadores
+│   └── formatters.ts
+├── views/              # Telas da aplicação (módulos visuais e roteamento)
+│   ├── rh/             # Dashboard do RH
+│   ├── leader/         # Portal do Líder
+│   ├── instructor/     # Painel do Instrutor
 │   ├── certificates/   # Emissão e visualização de certificados
-│   └── public-verify/  # Validação pública de certificados por código/QR
-├── services/           # Clientes HTTP e contratos de comunicação com a API
-│   ├── api.ts          # Configuração base de requisições (fetch / axios abstraction)
-│   ├── training.ts     # Serviços para Treinamentos
-│   ├── attendance.ts   # Serviços para Chamada e Presença
-│   └── certificate.ts  # Serviços para Certificados
-├── mocks/              # Dados simulados para desenvolvimento visual independente
-│   ├── trainingMock.ts
-│   ├── attendanceMock.ts
-│   └── certificateMock.ts
-├── types/              # Definições de tipos TypeScript compartilhados
-│   ├── training.ts
-│   ├── attendance.ts
-│   └── certificate.ts
-├── routes/             # Definição e mapeamento de rotas (React Router)
-│   └── index.tsx
-├── styles/             # Estilos globais e customizações de CSS
-│   └── index.css
+│   ├── public-verify/  # Validação pública de certificados
+│   └── routes.tsx      # Roteamento centralizado
 ├── App.tsx             # Componente raiz com ConfigProvider (Ant Design) e Router
+├── index.css           # Estilos globais e identidade visual consolidada
 └── main.tsx            # Ponto de entrada do Vite
 ```
 

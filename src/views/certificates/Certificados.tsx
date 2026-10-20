@@ -17,7 +17,7 @@ import {
   EyeOutlined,
   CheckCircleFilled,
 } from '@ant-design/icons';
-import type { Certificate } from '../../types/certificate';
+import type { Certificate } from '../../lib/types/certificate';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -126,7 +126,6 @@ export const Certificados: React.FC = () => {
         ))}
       </Row>
 
-      {/* Modal de Visualização e Exportação de Certificado */}
       <Modal
         open={isPreviewOpen}
         onCancel={() => setIsPreviewOpen(false)}
@@ -158,7 +157,6 @@ export const Certificados: React.FC = () => {
               position: 'relative',
             }}
           >
-            {/* Logo da Lins Agroindustrial no Certificado */}
             <div style={{ marginBottom: 20 }}>
               <img
                 src="https://linsagro.com.br/wp-content/uploads/2022/07/cropped-Lins_Logo_Horizontal_RGB_Preferencial_20250512_Keenwork_AF.png"

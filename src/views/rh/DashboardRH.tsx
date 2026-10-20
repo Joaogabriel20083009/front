@@ -26,9 +26,9 @@ import {
   ClockCircleOutlined,
 } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
-import type { Training, TrainingStatus } from '../../types/training';
-import { trainingService } from '../../services/trainingService';
-import type { RHIndicators } from '../../mocks/trainingMock';
+import type { Training, TrainingStatus } from '../../lib/types/training';
+import { trainingService } from '../../lib/trainingService';
+import type { RHIndicators } from '../../lib/mocks/trainingMock';
 
 const { Title, Paragraph, Text } = Typography;
 const { Option } = Select;
@@ -172,7 +172,6 @@ export const DashboardRH: React.FC = () => {
 
   return (
     <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-      {/* Top Banner Clean */}
       <div className="lins-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 }}>
         <div>
           <Title level={2} className="lins-page-title" style={{ margin: 0, fontSize: 24 }}>
@@ -207,7 +206,6 @@ export const DashboardRH: React.FC = () => {
         </div>
       ) : (
         <>
-          {/* Indicadores / KPIs Clean */}
           <Row gutter={[16, 16]} style={{ marginBottom: 28 }}>
             <Col xs={24} sm={12} lg={6}>
               <Card className="lins-card" bordered={false}>
@@ -258,7 +256,6 @@ export const DashboardRH: React.FC = () => {
             </Col>
           </Row>
 
-          {/* Listagem de Treinamentos */}
           <Card
             title={
               <span style={{ color: '#184080', fontWeight: 700, fontSize: 16 }}>
@@ -280,7 +277,6 @@ export const DashboardRH: React.FC = () => {
         </>
       )}
 
-      {/* Modal de Criação de Treinamento */}
       <Modal
         title={
           <span style={{ color: '#0032A0', fontWeight: 700, fontSize: 16 }}>
